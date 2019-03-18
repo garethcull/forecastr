@@ -1,0 +1,793 @@
+/* ********** General App Styling ************ */
+        
+        
+        body {
+            
+            font-family: "Montserrat","Helvetica Neue", "Helvetica";
+            background: #fbfbfb;
+            max-width: 100%;
+            overflow-x: hidden;
+            font-size: 12px;
+
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        /* ********** Navigation Styling ************ */
+        
+        
+        
+        
+    
+        .header {
+            
+            height:60px;
+            z-index:999;
+            
+        }
+        
+        .nav-bar {
+            
+            position: relative;
+            top: -31px;
+            left: 375px;
+            font-size: 16px;
+            
+        }
+        
+        .nav-link {
+            
+            float:left;
+            padding-right:20px;
+            position:relative; 
+            
+        }
+        
+        
+        .data-narrative-logo {
+            
+            font-weight: 400;
+            padding-left:22px;
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        .jumbotron {
+            
+            
+            background-color: #FFF;
+            
+            
+        }
+        
+        #main {
+            
+            height:992px;
+            
+        }
+        
+        
+        .csv-file {
+            
+            background-color: aliceblue;
+            height: 40px;
+            
+            
+        }
+        
+        .headline {
+            
+            
+            color:lightslategray;
+            position: relative;
+            left:75px;
+            
+            
+        }
+        
+        .subheading {
+            
+            
+            color:darkgray;
+            
+            
+        }
+        
+        
+        
+        .io-logo {
+            
+            color: #26a6fe;
+            
+            
+        }
+        
+        
+        .button-style {
+            
+            background-color:  #26a6fe;
+            color: #FFF;
+            padding: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size:12px;
+            border-radius: 5px;
+            border:none;
+            position: relative;
+            top:50px;
+                
+            
+            
+            
+        }
+        
+        .green-cta {
+            
+            background-color:  #61bb46;
+            color: #FFF;
+            padding: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size:14px;
+            border-radius: 5px;
+            border:none;
+            
+            
+        }
+        
+        .contact-cta {
+            
+            background-color:  #26a6fe;
+            color: #FFF;
+            padding: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size:12px;
+            border-radius: 5px;
+            border:none;
+            list-style: none;
+            
+                
+            
+            
+            
+        }
+        
+        li {
+            
+            list-style: none;
+            
+            
+        }
+        
+        
+        input[type=file] {
+           
+            background-color: #ddf1ff;
+            color: #26a6fe;
+            padding: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size:12px;
+            border-radius: 5px;
+            border:solid 1px #26a6fe;
+            
+            
+            
+        }
+        
+        #flow {
+            
+            position: relative;
+            top:30px;
+            
+        }
+        
+        .csv-example {
+            
+            height: 100px;
+            
+            
+        }
+        
+        
+        #generate-forecast {
+            
+            background-color:  #61bb46;
+            color: #FFF;
+            padding: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size:12px;
+            border-radius: 5px;
+            border:none;
+            list-style: none;
+            position:relative;
+            top:-45px;
+            width:100%;
+            
+            
+        }
+        
+        #forecast-out {
+            
+            width: 100%;
+            border-top: solid 1px #ddd;
+            border-width: thin;
+            height: 120px;
+            padding-top: 20px;
+            position: relative;
+            top: -35px;
+            
+            
+        }
+        
+        #forecast-model-type {
+            
+            width: 100%;
+            border-top: solid 1px #ddd;
+            border-width: thin;
+            height: 375px;
+            padding-top:20px;
+            position: relative;
+            top: 15px;
+            
+        }
+        
+        
+        
+        
+        
+        #chart-container {
+            
+            width:100%;
+            
+        }
+        
+        
+        #filter-list {
+            
+            padding-left: 14px;
+            position: relative;
+            top: 35px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            
+            
+        }
+        
+        #filter-list li {
+            
+            padding-top:10px;
+            
+        }
+        
+        
+        #filters {
+            
+            width:25%;
+            float:right;
+            position: absolute;
+            top:-17px;
+            right:0px;
+            padding:25px;
+            background-color: #FFF;
+            border: solid 1px #ddd;
+            height:979px;
+            overflow-y: auto;
+            border-top:none;
+            border-bottom:none;
+            
+            
+        }
+    
+        
+        .num-field {
+            
+            width:100%;
+            border:none;
+            border-bottom: 1px solid #ddd;
+            font-size:10px;
+            padding-left:9px;
+            
+        }
+        
+        .dd-menu {
+            
+            width: 100%;
+            height: 29px;
+            margin-top: 10px;
+            background-color: #e7eff1;
+            border-radius: 3px;
+            color: lightslategray;
+            border: 1px solid transparent;
+            font-size:9px;
+            
+            
+            
+        }
+        
+        input[type=checkbox] {
+            
+            
+            margin-left:9px;
+            
+        }
+        
+        
+        
+        
+        
+        select {
+            
+            font-size:11px;
+            
+        }
+        
+        .param-header {
+            
+            color: #26a6fe;
+            padding-bottom:15px;
+            font-size:12px;
+            
+            
+        }
+        
+        .seasonality-check-options {
+            
+            font-size:11px;
+            
+        }
+        
+        
+        .argument-name {
+            
+            
+            font-size:9px;
+            padding-left:9px;
+            
+            
+        }
+        
+        .arguments {
+            
+            padding-bottom:10px;
+            font-size:9px;
+        }
+        
+        .update-cta {
+            
+            position:relative;
+            top:20px;
+            font-size: 12px;
+            width:100%;
+            
+            
+        }
+        
+        #filter-icon {
+            
+            
+            float: left;
+            position: relative;
+            height: 30px;
+            padding-right: 25px;
+            left: 11px;
+            
+            
+        }
+        
+        .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+        color: #FFF;
+        cursor: default;
+        background-color: #343c41;
+        
+        border: none;
+            
+        padding-left:24px;
+        padding-right:24px;
+        
+        
+        }
+        
+        
+        .nav-tabs>li.active>a {
+    
+        border-bottom: 3px solid #26a6fe;
+    
+    
+            }
+            
+        
+        
+        a {
+            color: lightslategray;
+            text-decoration: none;
+        }
+        
+        
+        #nav-bg {
+            
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: #FFF;
+            width: 100%;
+            border-bottom: 1px solid #ddd;
+            height: 68px;
+            z-index: -1;
+            
+            
+        }
+        
+        .nav-tabs {
+            
+            position: absolute;
+            top: 74px;
+            width: 100%;
+            border:none;
+            font-size:11px;
+        }
+        
+        #subnav-bg {
+            
+            background-color: #3f474e;
+            position: absolute;
+            top: 68px;
+            height: 45px;
+            width: 100%;
+            left: 0;
+            z-index: -1;
+            
+            
+        }
+        
+        
+        
+        /* ******************* STEP ONE STYLING ****************************** */
+        
+        #sample-files {
+            
+            width:33%;
+            float:right;
+            position: absolute;
+            top:3px;
+            right:0px;
+            padding:15px;
+            padding-left:25px;
+            padding-right:25px;
+            background-color: #FFF;
+            border: solid 1px #ddd;
+            height:979px;
+            border-top:none;
+            
+            
+            
+        }
+        
+        .main-content {
+            
+            width:66%;
+            padding:25px;
+            
+            
+        }
+        
+        #expected-output-pic {
+            
+            width:100%;
+
+            
+            
+        }
+        
+        .csv-title-icon {
+            
+            width:60px;
+            position:relative;
+            top:14px;
+        }
+        
+        
+        .side-bar-title-section {
+            
+            border-bottom: 1px solid #ddd;
+            height: 102px;
+            
+            
+        }
+        
+        .filter-title-section {
+            
+            height:59px;
+            
+            
+        }
+        
+        .build-title {
+            
+            top:-58px;
+        }
+        
+        .download-csv-icon {
+            
+            width: 30px;
+            
+        }
+        
+        .table>tbody>tr>td {
+            
+            vertical-align: middle;
+            
+        } 
+        
+        
+         /* ******************* STEP TWO STYLING ****************************** */
+        
+        
+        #menu1 {
+            
+            padding-left:22px;
+            
+        }
+        
+        #menu1 .step-title {
+            
+            position: relative;
+            top:22px;
+            
+        }
+        
+        #originalChart {
+            
+            padding: 10px;
+            background-color: #FFF;
+            border: 1px solid #ddd;
+            padding-right: 28px;
+            margin-bottom: 40px;
+            margin-top: 40px;
+            
+            
+            
+        }
+        
+        #build-forecast-sidenav {
+            
+            width:25%;
+            float:right;
+            position: absolute;
+            top:-17px;
+            right:0px;
+            padding:15px;
+            padding-left:25px;
+            padding-right:25px;
+            background-color: #FFF;
+            border: solid 1px #ddd;
+            height:979px;
+            border-top:none;
+            font-size:11px;
+            
+            
+        }
+        
+        #build-forecast-sidenav .side-nav-title {
+            
+            top:-57px;
+            padding-right:38px;
+            
+        }
+        
+        
+        #helpful-stats {
+            position: absolute;
+            left: -18px;
+            
+        }
+        
+        #helpful-stats li {
+            
+            float: left;
+            position:relative;
+            left:0;
+            margin-right: 50px;
+            border-right: 1px solid #ddd;
+            padding-right: 50px;
+            
+        }
+        
+        
+        .summary-data {
+            
+            font-size:28px;
+            
+            
+        }
+        
+        #build-basic-forecast {
+            
+            width:71%;
+            margin-right:200px;
+            
+            
+        }
+        
+        
+        #timeframe {
+            
+            font-weight: bold;
+            
+            
+        }
+        
+        .alpha {
+            
+            position: relative;
+            top: -14px;
+            font-size: 8px;
+            left: 8px;
+            background-color:transparent;
+            color: #26a6fe;
+            
+        }
+        
+        #forecastr-logo {
+            
+            color: darkgrey;
+            
+        }
+        
+        #advanced-filters-title {
+            
+            color: #26a6fe;
+            font-size:10px;
+            
+            
+        }
+        
+        #forecast-icon {
+            
+            width: 60px;
+            
+            
+        }
+        
+        .side-nav-title {
+            
+            position: relative;
+            top: -45px;
+            left: 75px;
+            
+        }
+        
+        
+        .filter-groups {
+            
+            padding-top:25px;
+            padding-bottom: 5px;
+            
+            
+        }
+        
+        #forecast-content {
+            
+            width:72%;
+            
+        }
+        
+        #download-forecast-cta {
+            
+            background-color:  transparent;
+            color: #26a6fe;
+            padding: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size:12px;
+            border-radius: 5px;
+            border:1px solid #26a6fe;
+            position:relative;
+            top:-21px;
+            float:right;
+            
+        }
+        
+        
+        /* ************ STEP 3 ***************** */
+        
+        
+        #menu2 {
+            
+            padding-left:22px;
+            
+        }
+        
+        #menu2 .step-title {
+            
+            position: relative;
+            top:22px;
+            
+        }
+        
+        
+        
+        #forecast-content .step-title {
+            
+            position: relative;
+            top: 22px;
+            
+            
+            
+        }
+        
+        #reset-button {
+            
+            background-color:  transparent;
+            color: #61bb46;
+            padding: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size:12px;
+            border-radius: 5px;
+            border:1px solid #61bb46;
+            position:relative;
+            top:-21px;
+            float:right;
+            margin-left:10px;
+            
+            
+            
+            
+        }
+        
+        
+        #myChart {
+            
+            height:350px;
+            width:100%;
+            padding-right: 31px;
+            background-color: #FFF;
+            border: 1px solid #ddd;
+            padding-left: 20px;
+            padding-top: 15px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            
+        }
+        
+        
+        
+        
+        /* ************ Footer ********************* */
+        
+        
+        footer {
+            
+            position:relative;
+            top:0;
+            padding:25px;
+            background-color: #3f474e;
+            border-top: 3px solid #26a6fe;
+            color: #FFF;
+            width: 100%;
+            height: 200px;
+            
+        }
+        
+        
+        .aboutapp {
+            
+            left:-200px;
+            
+        }

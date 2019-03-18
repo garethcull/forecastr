@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forecastr: Build a Time Series Forecast in 3 Easy Steps</title>
+    <meta name="description" content="Create a forecast in 3 easy steps. Simply upload a CSV, set your forecast length and model to generate a baseline forecast.">
+    <meta name="robots" content="index, follow" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content ="width=device-width,initial-scale=1" />
+    
+    <!-- Google Tag Manager Data Layer -->
+    <script>
+      dataLayer = [];
+    </script>
+    <!-- End Google Tag Manager Data Layer -->
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer',{{INSERT YOUR GTM ID}});</script>
+    <!-- End Google Tag Manager -->
+    
+   <!-- Stylesheets -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+    <link href="{{url_for('static', filename='styles/product_page.css')}}" rel="stylesheet"> 
+    
+    <!-- Scripts -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.slim.js"></script>    
+    <script type="text/javascript" src="{{url_for('static', filename='js/papaparse.js')}}" ></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/behaviour_analytics.js')}}" ></script> 
+    
+</head>
+<body>
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PP5GR6W"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
+    <div class="container">
+        
+        <div class="header">
+            <h3 class="text-muted">forecastr<span class='alpha'>ALPHA</span></h3>
+            <a data-element='outbound-cta' data-val='Github Banner' href="https://github.com/garethcull"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub Banner"></a>
+            <nav>
+                <ul class="nav-bar">
+                    <li><a class='nav-link' href="/">about app</a></li>  
+                    <li><a class='nav-link' href="https://goo.gl/forms/9Dx5dAMzCtF2yXAy2">feedback</a></li> 
+                </ul>
+            </nav>  
+        </div>
+ 
+        <div class="jumbotron">
+            
+            <h1 class='headline'>Upload data. Generate Forecast. </h1>
+            <h4 class='subheading'>In 3 simple steps, automate the creation of a time series forecast. <br/> No sign-up is required and no data from your csv is stored on our servers.</h4>            
+            <a class='primary-cta' data-element='primary' href="#">Build a Forecast Now</a>
+            <p id='copy-under-primary-cta'><a data-element='outbound-cta' data-val='Github link under primary cta' href='https://github.com/garethcull'>Or fork it on Github</a></p>
+            <img id='hero-image' src="https://www.garethcull.com/images/app.png"/>
+            
+            
+        </div>
+        
+    </div>
+    
+    <div class="container">
+        
+        
+        <section id='three-steps-content'>
+            
+            <h2>In 3 Easy Steps</h2>
+            <p>Automate forecast creation</p>
+            
+            <ul id='three-easy-steps'>
+            
+                <li><img class='three-steps-icon' id='step1' src="{{url_for('static', filename='img/csv_icon_blue.png')}}"/><h4>Upload Your CSV</h4><p>Choose a csv with 2 columns containing a date and a metric. Then click upload.</p></li>
+                <li><img class='three-steps-icon' id='step2' src="{{url_for('static', filename='img/settings_icon_blue.png')}}"/><h4>Build Basic Forecast</h4><p>Choose how long to forecast and the type of forecasting model.</p></li>
+                <li><img class='three-steps-icon' id='step3' src="{{url_for('static', filename='img/forecast_icon.png')}}"/><h4>Tweak Forecast w/ Advanced Filters</h4><p>After you've generated your forecast, tweak it with a variety of advanced filters.</p></li>
+
+            </ul>
+
+        </section>
+        
+    </div>
+    
+    <div class="container">
+        
+        <section id='features'>
+        
+            <div id='features-left-content'>
+
+                <h2>Product Features</h2>
+                <p>Alpha Version 0.1</p>
+                <ul class="nav nav-tabs" id='features-list'>
+                    <li class='active'><a data-toggle="tab" href="#opensource">Proudly Open Source</a></li>
+                    <li><a data-toggle="tab" href="#private">Private</a></li>
+                    <li><a data-toggle="tab" href="#export">Export Forecast Data</a></li>
+                    <li><a data-toggle="tab" href="#prophet">Powered by Facebook Prophet</a></li>
+                </ul>
+                
+            </div>            
+        
+            <div id='features-right-content'>
+
+                <div class="tab-content">
+                    
+                    <div id="opensource" class="tab-pane fade in active">
+
+                        <img id='open-source-icon' src="{{url_for('static', filename='img/heart_opensource_tech.png')}}"/>
+                       
+                        <div class='features-copy'>    
+                            <h4 class='features-title'>Proudly Open Source</h4>
+                            <p class='features-description'>Forecastr wouldn't be possible without the awesome open source community developing cool tools like chartjs, flask and Facebook's Prophet. This app was made with love using Javascript and Python.</p>
+                        </div>
+
+                    </div>
+
+                    <div id="private" class="tab-pane fade in">
+
+                        <img id='privacy-mask' src="{{url_for('static', filename='img/mask.png')}}"/>
+
+                        <div class='features-copy'>    
+                            <h4 class='features-title'>Private</h4>
+                            <p class='features-description'>Any data that you upload is run through a python script and is not stored on a db. In the spirit of transparency, we'll soon be open sourcing this forecasting tool so that you can see all of the data transformations and how the script works.</p>
+                        </div>
+
+                    </div>
+
+                    <div id="export" class="tab-pane fade in">
+
+                        <img id='export-forecast' src="{{url_for('static', filename='img/export_data.png')}}"/>
+                        <div class='features-copy'>    
+                            <h4 class='features-title'>Export your Forecast Data</h4>
+                            <p class='features-description'>Easily export your forecast by using the 'Download' CTA shown above.</p>
+                        </div>
+
+                    </div>
+
+                    <div id="prophet" class="tab-pane fade in">
+
+                        <img id='fb-prophet-icon' src="{{url_for('static', filename='img/facebook_prophet_icon.png')}}"/>
+                        <div class='features-copy'>    
+                            <h4 class='features-title'>Powered by Facebook Prophet</h4>
+                            <p class='features-description'>Thanks to the amazing work done by the Facebook Open Source team, forecastr incorporates most of the hyperparameters as filters. Check out the real library in python: pip install fbprophet </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </div>
+    
+    <div class="container">
+    
+        <section id='use-cases-section'>
+        
+            <h2>Forecast Use Cases</h2> 
+            <p>Maybe you want measure the incremental installs of an app from a recent marketing campaign? Or forecast out where your market share is heading? Forecastr can help with that and more. </p>
+            <br/>    
+            <button id='get-started-cta' class='secondary-cta'>Get Started</button>
+
+        </section>
+
+    </div>
+    
+    <div class="container">
+        
+        <section id='secondary-cta-section'>
+        
+            <h2>Ready to Forecast?</h2> 
+
+            <p>All Set? <a data-element='internal-link' data-val='Link: Build your forecast now' href="/app/">Build your forecast now</a>. Need a csv to test it out? Here are a few sample csvs to get you started. </p> 
+
+            <table id='sample-csvs' class='table'>
+                <thead>
+                    <th></th>    
+                    <th>Dataset</th>
+                    <th>Time Series Type</th>
+
+                </thead>
+
+                    <tr>
+                        <td><a data-element='download-csv' data-val='Shampoo Sales CSV' href="{{url_for('static', filename='sampledata/shampoo_sales.csv')}}"><img class='download-csv-icon' src="{{url_for('static', filename='img/download_arrow.png')}}"/></a></td>
+                        <td>Shampoo Sales</td>
+                        <td>Monthly</td>
+
+                    </tr>
+                    <tr>
+                        <td><a data-element='download-csv' data-val='Saugeen River Temps CSV' href="{{url_for('static', filename='sampledata/mean_temps.csv')}}"><img class='download-csv-icon' src="{{url_for('static', filename='img/download_arrow.png')}}"/></a></td>
+                        <td>Saugeen River Temps</td>
+                        <td>Daily</td>
+
+                    </tr>
+                    <tr>
+                        <td><a data-element='download-csv' data-val='Manning Wikipedia Log Scale PVs CSV' href="{{url_for('static', filename='sampledata/example_wp_log_peyton_manning_v2.csv')}}"><img class='download-csv-icon' src="{{url_for('static', filename='img/download_arrow.png')}}"/></a></td>
+                        <td>Manning Wikipedia Log Scale PVs</td>
+                        <td>Daily</td>
+
+                    </tr>       
+            </table>
+            
+            <img id='forecast-fun-graphic' src="{{url_for('static', filename='img/forecast_fun.png')}}"/>
+
+        </section>
+    </div>
+
+    <footer class="footer">
+        
+            <ul>
+                <li><h4>About</h4></li>
+                <li><a data-element='outbound-cta' data-val='https://facebook.github.io/prophet/docs/quick_start.html' href="https://facebook.github.io/prophet/docs/quick_start.html">Facebook Prophet</a></li>
+                <li>For more hyper-parameter tweaking, pip install fbprophet.</li>
+                <br/>    
+                <li>Copyright 2019 - Made in Toronto by <a data-element='outbound-cta' data-val='https://www.garethcull.com' href="https://www.garethcull.com/" >Gareth Cull</a>.</li>    
+            </ul>
+
+    </footer>
+
+</body>    
+</html>

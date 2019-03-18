@@ -1,0 +1,974 @@
+
+        body {
+            
+            font-family: "Montserrat","Helvetica Neue", "Helvetica";
+            background: #fbfbfb;
+
+            
+        }
+    
+        .header {
+            
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding-top: 0;
+            width: 100%;
+            height: 70px;
+            padding-left: 25px;
+            background-color: #FFF;
+            border-bottom: 1px solid #ddd;
+            
+            
+        }
+        
+        h3 {
+            
+            font-weight:300;
+            
+            
+        }
+        
+        .nav-bar {
+            
+            position: relative;
+            top: -31px;
+            left: 375px;
+            font-size: 16px;
+            
+        }
+        
+        .nav-link {
+            
+            float:left;
+            padding-right:20px;
+            position:relative; 
+            
+        }
+        
+        
+        
+        .csv-file {
+            
+            background-color: aliceblue;
+            height: 40px;
+            
+            
+        }
+        
+        .headline {
+            
+            
+            color:lightslategray;
+            position: relative;
+            text-align:center;
+            font-weight: 300;
+            font-size:48px;
+            padding-top: 75px;
+            
+            
+        }
+        
+        .subheading {
+            
+            
+            color:darkgray;
+            text-align:center;
+            font-weight: 300;
+            
+        }
+        
+        
+        #hero-image {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 90%;
+            position: relative;
+            bottom: 0;
+            padding-top:50px;    
+          
+        }
+        
+        #myChart {
+            
+            height:350px;
+            width:100%;
+            padding-right:35px;
+            
+        }
+        
+        .io-logo {
+            
+            color: #26a6fe;
+            font-weight:300;
+            
+            
+        }
+        
+        
+        .button-style {
+            
+            background-color:  #26a6fe;
+            color: #FFF;
+            padding: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size:12px;
+            border-radius: 5px;
+            border:none;
+            position: relative;
+            top:50px;
+                
+            
+            
+            
+        }
+        
+        .primary-cta {
+            
+            background-color:  #26a6fe;
+            color: #FFF;
+            padding: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            font-size:14px;
+            border-radius: 5px;
+            border:none;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            top: 30px;
+            position: relative;
+            margin-top:25px;
+            width: 200px;
+            text-align: center;
+        }
+        
+        .primary-cta:hover {
+            
+            background-color:  #26a6fe;
+            color: #FFF;
+            padding: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            font-size:14px;
+            border-radius: 5px;
+            border:none;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            top: 30px;
+            position: relative;
+            margin-top:25px;
+            width: 200px;
+            text-align: center;
+        }
+        
+        
+        
+        #copy-under-primary-cta {
+            
+            font-size: 10px;
+            color:#26a6fe;
+            text-align: center;
+            position: relative;
+            top: 36px;
+            
+        }
+        
+        .contact-cta {
+            
+            background-color:  #26a6fe;
+            color: #FFF;
+            padding: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size:12px;
+            border-radius: 5px;
+            border:none;
+            list-style: none;
+            
+                
+            
+            
+            
+        }
+        
+        li {
+            
+            list-style: none;
+            
+            
+        }
+        
+        
+        input[type=file] {
+           
+            background-color: #ddf1ff;
+            color: #26a6fe;
+            padding: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size:12px;
+            border-radius: 5px;
+            border:solid 1px #26a6fe;
+            
+            
+            
+        }
+        
+        #flow {
+            
+            position: relative;
+            top:30px;
+            
+        }
+        
+        .csv-example {
+            
+            height: 100px;
+            
+            
+        }
+        
+        
+        #generate-forecast {
+            
+            background-color:  #61bb46;
+            color: #FFF;
+            padding: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size:14px;
+            border-radius: 5px;
+            border:none;
+            list-style: none;
+            position:relative;
+            top:0px;
+            
+            
+        }
+        
+        #forecast-out {
+            
+            width: 100%;
+            border-top: solid 1px #ddd;
+            border-width: thin;
+            height: 120px;
+            padding-top: 20px;
+            position: relative;
+            top: -35px;
+            
+            
+        }
+        
+        #forecast-model-type {
+            
+            width: 100%;
+            border-top: solid 1px #ddd;
+            border-width: thin;
+            height: 375px;
+            padding-top:20px;
+            position: relative;
+            top: 15px;
+            
+        }
+        
+        .sub-header {
+            
+            font-weight: bolder;
+            font-size:medium;
+            
+            
+        }
+        
+        
+        
+        #chart-container {
+            
+            width:100%;
+            
+        }
+        
+        
+        #filter-list {
+            
+            padding-left: 14px;
+            position: relative;
+            top: 35px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            
+            
+        }
+        
+        #filter-list li {
+            
+            padding-top:10px;
+            
+        }
+        
+        
+        #filters {
+            
+            width:25%;
+            float:right;
+            position: absolute;
+            top:40px;
+            right:0px;
+            padding:25px;
+            background-color: #FFF;
+            border: solid 1px #ddd;
+            height:921px;
+            
+            
+        }
+    
+        
+        .num-field {
+            
+            width:100%;
+            margin-top:15px;
+            
+        }
+        
+        footer {
+            
+            position:relative;
+            top:100px;
+            color:#444444;
+            
+        }
+        
+        
+        
+        select {
+            
+            font-size:11px;
+            
+        }
+        
+        .param-header {
+            
+            color: #26a6fe;
+            padding-bottom:13px;
+            
+            
+        }
+        
+        .seasonality-check-options {
+            
+            font-size:11px;
+            
+        }
+        
+        
+        .argument-name {
+            
+            
+            font-size:12px;
+            
+            
+        }
+        
+        .arguments {
+            
+            padding-bottom:10px;
+            
+        }
+        
+        .update-cta {
+            
+            position:relative;
+            top:20px;
+            
+            
+        }
+        
+        #filter-icon {
+            
+            
+            float: left;
+            position: relative;
+            height: 30px;
+            padding-right: 25px;
+            left: 11px;
+            
+            
+        }
+        
+        .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+        color: #26a6fe;
+        cursor: default;
+        background-color: #fbfbfb;
+        border-bottom-color: #ddd;
+        
+        
+        }
+        
+        a {
+            color: lightslategray;
+            text-decoration: none;
+        }
+        
+        /* ******************* STEP ONE STYLING ****************************** */
+        
+        #sample-files {
+            
+            width:33%;
+            float:right;
+            position: absolute;
+            top:40px;
+            right:0px;
+            padding:15px;
+            padding-left:25px;
+            padding-right:25px;
+            background-color: #FFF;
+            border: solid 1px #ddd;
+            height:900px;
+            
+            
+            
+        }
+        
+        .main-content {
+            
+            width:66%;
+            padding-right:20px;
+            
+            
+        }
+        
+        #expected-output-pic {
+            
+            width:100%;
+
+            
+            
+        }
+        
+        .csv-title-icon {
+            
+            width:60px;
+            position:relative;
+            top:14px;
+        }
+        
+        
+        .side-bar-title-section {
+            
+            border-bottom: 1px solid #ddd;
+            height: 102px;
+            
+            
+        }
+        
+        .filter-title-section {
+            
+            height:59px;
+            
+            
+        }
+        
+        .build-title {
+            
+            top:-58px;
+        }
+        
+        .download-csv-icon {
+            
+            width: 30px;
+            
+        }
+        
+        .table>tbody>tr>td {
+            
+            vertical-align: middle;
+            
+        } 
+        
+        
+         /* ******************* STEP TWO STYLING ****************************** */
+        
+        
+        #summary-of-data {
+            
+            width:25%;
+            float:right;
+            position: absolute;
+            top:40px;
+            right:0px;
+            padding:15px;
+            padding-left:25px;
+            padding-right:25px;
+            background-color: #FFF;
+            border: solid 1px #ddd;
+            height:900px;
+            
+            
+        }
+        
+        #helpful-stats li {
+            
+            float: left;
+            position:relative;
+            left:0;
+            margin-right:25px;
+            
+            
+        }
+        
+        #build-basic-forecast {
+            
+            width:75%;
+            padding-right:20px;
+            
+            
+        }
+        
+        
+        #timeframe {
+            
+            font-weight: bold;
+            
+            
+        }
+        
+        .jumbotron {
+            
+            background-color: transparent;
+            padding-bottom: 0;
+            margin-bottom: 0;
+            
+        }
+        
+        .alpha {
+            
+            position: relative;
+            top: -14px;
+            font-size: 8px;
+            left: 8px;
+            background-color:transparent;
+            color: #26a6fe;
+            
+        }
+        
+        #forecastr-logo {
+            
+            color: darkgrey;
+            font-weight: 300;
+            
+        }
+        
+        #advanced-filters-title {
+            
+            color: #26a6fe;
+            font-size:10px;
+            
+            
+        }
+        
+        #forecast-icon {
+            
+            width: 60px;
+            
+            
+        }
+        
+        .side-nav-title {
+            
+            position: relative;
+            top: -45px;
+            left: 75px;
+            
+        }
+        
+        
+        .filter-groups {
+            
+            padding-top:25px;
+            padding-bottom: 25px;
+            border-bottom:1px solid #ddd;
+            
+            
+        }
+        
+        #forecast-content {
+            
+            width:75%;
+            
+        }
+        
+        #download-forecast-cta {
+            
+            background-color:  transparent;
+            color: #26a6fe;
+            padding: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size:12px;
+            border-radius: 5px;
+            border:1px solid #26a6fe;
+            position:relative;
+            top:-26px;
+            right:36px;
+            float:right;
+            
+        }
+        
+        
+        /* Landing Page Styling */
+        
+        
+        
+        /* General Styling for the Product Page */ 
+        
+        
+        .container {
+            
+            width:100%;
+            
+            
+        }
+        
+        
+        #three-steps-content {
+            
+            background-color: #FFF;
+            padding-top:100px;
+            padding-bottom: 100px;
+            width:100%;
+            padding-left:15px;
+            padding-right:15px;
+            text-align: center;
+            border:1px solid #ddd;
+            overflow:hidden;
+            margin:0 auto;
+            
+            
+        }
+        
+        #three-easy-steps {
+            
+            
+            display: inline-block;
+            top:50px;
+            position: relative;
+            height:auto;
+            margin-bottom:75px;
+            padding:0;
+            
+        }
+        
+        
+        #three-easy-steps li {
+            
+            float:left;
+            position:relative;
+            padding-right:50px;
+            padding-left:50px;
+            width:300px;
+            
+        }
+        
+        .three-steps-icon {
+            
+            width:64px;
+            padding-top: 50px;
+            padding-bottom: 50px;
+            
+            
+            
+        }
+        
+        #use-cases-section {
+            
+            padding:50px;
+            border:1px solid #ddd;
+            margin-top:50px;
+            background-color: #3f474e;
+            color: #FFF
+            
+            
+            
+        }
+        
+        
+        
+        /* Second Section of LP */
+        
+        
+        #features {
+            
+            
+            overflow: -webkit-paged-x;
+            width:100%;
+            margin:0 auto;
+            
+            
+        }
+        
+        
+        #features-left-content {
+            
+            
+            width: 100%;
+            background-color: transparent;
+            color: #444444;
+            padding-top: 50px;
+            margin:0 auto;
+            
+            
+            
+            
+        }
+        
+        #features-left-content h2, #features-left-content p {
+            
+            text-align: center;
+            
+        }
+        
+        
+        #features-right-content {
+            
+            
+            width:100%;
+            color:#444444;
+            position: relative;
+            padding-left: 50px;
+            padding-right:50px;
+            top:50px;
+            
+        }
+        
+        #privacy {
+            
+            width:100%;
+            background-color: #26a6fe;
+            color:#FFF;
+            padding: 50px;
+            padding-bottom: 100px;
+            
+            
+            
+            
+        }
+        
+        #privacy-mask {
+            
+            width: 128px;
+            position: relative;
+            top: 113px;
+            display: block;
+            margin: 0 auto;
+            
+        }
+        
+        
+        
+        
+        #secondary-cta-section {
+            
+            width:100%;
+            background-color: #FFF;
+            color:#444444;
+            padding: 50px;
+            padding-bottom: 100px;
+            border: 1px solid #ddd;
+            height:400px;
+            
+            
+        }
+        
+        
+        
+        .secondary-cta {
+            
+            background-color:  transparent;
+            color: #26a6fe;
+            padding: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size:12px;
+            border-radius: 5px;
+            border:1px solid #26a6fe;
+            
+            
+        }
+        
+        #get-started-cta {
+            
+            background-color:  transparent;
+            color: #FFF;
+            padding: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size:12px;
+            border-radius: 5px;
+            border:1px solid #FFF;
+            
+            
+        }
+        
+        
+        .section-icons {
+            
+            width:100px;
+            
+        }
+        
+        
+        .nav-tabs>li.active>a {
+            
+            color:#26a6fe;
+            border:1px solid #26a6fe;
+            border-radius: 5px;
+            
+            
+        }
+        
+        .nav-tabs>li>a {
+            
+            
+            color:lightslategray;
+            border-radius: 5px;
+            border: 1px solid lightslategray;
+
+      
+        }
+        
+        .nav-tabs>li {
+            
+            
+            
+            
+            
+        }
+        
+        .nav-tabs {
+            
+           border:none;
+           
+           
+            
+        }
+        
+        .features-copy {
+            
+            position: absolute;
+            top: 355px;
+            border-top: 1px solid #ddd;
+            padding-top:25px;
+}
+        
+        
+        
+
+        #open-source-icon {
+            
+            
+            width: 400px;
+            position: relative;
+            top: 75px;
+            display: block;
+            margin: 0 auto;
+            
+        }
+        
+        
+        #fb-prophet-icon {
+            
+            position: relative;
+            top: 22px;
+            display: block;
+            margin: 0 auto;
+            
+            
+            
+        }
+        
+        
+        #features-left-content {
+            
+            
+            
+            
+        }
+        
+        #features-list {
+            
+            width: 737px;
+            margin: 0 auto;
+            position: relative;
+            top:50px;
+            
+        }
+        
+        #features-list li {
+            
+            margin-right:10px;
+            margin-bottom:10px;
+            
+            
+        }
+        
+        
+
+
+        #export-forecast {
+            
+            display: block;
+            margin: 0 auto;
+            width: 600px;
+            position: relative;
+            top:66px;
+        }
+
+            
+        #sample-csvs {
+            
+            width:50%;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            
+        }    
+        
+        
+        #forecast-fun-graphic {
+            
+            position: relative;
+    float: right;
+    z-index: 100;
+    top: -244px;
+    right: -50px;
+            
+            
+        }
+        
+        
+        
+        /* ************ Footer ********************* */
+        
+        
+        footer {
+            
+            position:relative;
+            top:0;
+            padding:25px;
+            background-color: #3f474e;
+            border-top: 3px solid #26a6fe;
+            color: #FFF;
+            width: 100%;
+            height: 200px;
+            
+        }
+        
+        
+        .aboutapp {
+            
+            left:-200px;
+            
+        }
+        
