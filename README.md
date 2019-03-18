@@ -4,7 +4,6 @@ A flask web app that leverages Facebook Prophet to provide people with the abili
 ### Contents
 
 What is forecastr?<br/>
-Demo<br/>
 How does this app work?<br/>
 Data Collection on the User Experience<br/>
 Requirements<br/>
@@ -77,6 +76,15 @@ On the client side:
 - chartjs
 - jquery
 - bootstrap
+
+#### How to run this locally. 
+
+1. Clone this repo and make sure you install all of the above dependencies. 
+2. Open forecastr_v4.js and make sure that this line contains http:// and not https:// (which is used in production on heroku)
+https://github.com/garethcull/forecastr/blob/master/static/js/forecastr_v4.js#L13
+3. $ python app.py
+4. Open http://localhost:5000/
+
 
 ### References
 
