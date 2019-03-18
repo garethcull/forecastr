@@ -74,6 +74,7 @@ This app uses the following python libraries, which you will need to install:
 
 On the client side:
 
+- chartjs
 - jquery
 - bootstrap
 
@@ -81,9 +82,12 @@ On the client side:
 
 Here are some links that I found very useful:
 
+- Facebook Prophet: https://facebook.github.io/prophet/docs/quick_start.html#python-api
 - Flask: http://flask.pocoo.org/
 - SocketIO: https://flask-socketio.readthedocs.io/en/latest/
+- ChartJS: https://chartjs.org
 - Stackoverflow: https://www.stackeroverflow.com
 - How to export data as a csv in javascript: https://halistechnology.com/2015/05/28/use-javascript-to-export-your-data-as-csv/
+- Implementing Facebook Prophet Efficiently: https://towardsdatascience.com/implementing-facebook-prophet-efficiently-c241305405a3
 
 
