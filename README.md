@@ -32,7 +32,7 @@ This app doesn't store any data about the contents of the uploaded csv within a 
 Once the csv has been uploaded to the app, the data is then stored within temporary variables in the client and data is then sent back and forth between to client and server until the forecast is generated. 
 
 At a high level, data flows like this:<br/>
-{{INSERT Data flow PIC}}
+<img src="https://raw.githubusercontent.com/garethcull/forecastr/master/static/img/data-flow.png" width="1024" />
 
 As an example, Let’s say a user is at Step 1. They’ve decided to try the app and click on the CTA “Browse File” and choose a CSV to upload. The app then parses this data and sends it server side to a python script that calculates some basic statistics about the data before sending it back and then forward to visualize on the second tab (ie. Step 2: Review Data + Setup Model).  
 
