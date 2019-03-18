@@ -20,9 +20,9 @@ socketio = SocketIO(app, logger=False, engineio_logger=False)
 
 
 # Suppress logs except for error: https://stackoverflow.com/questions/43487264/disabling-logger-in-flask-socket-io
-#logging.getLogger('socketio').setLevel(logging.ERROR)
-#logging.getLogger('engineio').setLevel(logging.ERROR)
-#logging.getLogger('geventwebsocket.handler').setLevel(logging.ERROR)
+logging.getLogger('socketio').setLevel(logging.ERROR)
+logging.getLogger('engineio').setLevel(logging.ERROR)
+logging.getLogger('geventwebsocket.handler').setLevel(logging.ERROR)
 
 
 
