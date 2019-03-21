@@ -85,6 +85,8 @@ https://github.com/garethcull/forecastr/blob/master/static/js/forecastr_v4.js#L1
 3. $ python app.py
 4. Open http://localhost:5000/
 
+#### Blog Post on what I Learned Building a UI on top of Facebook Prophet
+https://www.garethcull.com/2019/03/20/what-i-learned-building-a-ui-on-top-of-facebook-prophet/
 
 ### References
 
