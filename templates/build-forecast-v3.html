@@ -5,6 +5,15 @@
     <meta name="description" content="Create a time series forecast in 3 steps from within a UI.">
     <meta name="robots" content="index, follow" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="garethcull.com" />
+    <meta name="twitter:creator" content="@garethcull" />
+    <meta prefix="og: http://ogp.me/ns#" property='og:title' content='Forecastr App: Create a time series forecast in 3 steps from within a UI '/>
+    <meta prefix="og: http://ogp.me/ns#" property='og:image' content='https://www.garethcull.com/images/social_share_forecastr.png'/>
+    <meta prefix="og: http://ogp.me/ns#" property='og:description' content='Create a time series forecast in 3 easy steps. Upload CSV, Setup, Generate.'/>
+    <meta prefix="og: http://ogp.me/ns#" property='og:url' content='https://forecaster-io.herokuapp.com/app/'/>
+    
+    
     
     <!-- Google Tag Manager Data Layer -->
     <script>
@@ -17,7 +26,7 @@
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer',{{INSERT YOUR GTM ID}});</script>
+    })(window,document,'script','dataLayer','GTM-PP5GR6W');</script>
     <!-- End Google Tag Manager -->
     
     <!-- Stylesheets -->
@@ -37,7 +46,7 @@
 <body>
     
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{INSERT GTM ID}}"
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PP5GR6W"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     
@@ -50,7 +59,8 @@
                 <nav>
                     <ul class="nav-bar">
                         <li><a class='nav-link aboutapp' href="/">about app</a></li>  
-                        <li><a class='nav-link' href="https://goo.gl/forms/9Dx5dAMzCtF2yXAy2">feedback</a></li> 
+                        <li><a class='nav-link feedback-link' href="https://goo.gl/forms/9Dx5dAMzCtF2yXAy2">feedback</a></li> 
+                        <li><a class='nav-link partner-with-me' href="https://www.linkedin.com/in/garethcull/">NEED AN ANALYTICS PARTNER?</a></li>
                     </ul>
                 </nav>
                 
@@ -214,9 +224,9 @@
                                 <br/>
                                 <h5 id='chart-title' class='sub-header'>INSERT TITLE</h5>
                                 <img id="loading" src="{{url_for('static', filename='img/loading.gif')}}"/>
-                                <ul id='processing'>
-                                
-                                </ul>
+                                <p id='processing'>
+                                Your forecast is being built. Larger datasets may experience wait times of up to 1 minute in the Alpha Version of this site.
+                                </p>
                                 <canvas id="myChart"></canvas>
 
                             </div> 
