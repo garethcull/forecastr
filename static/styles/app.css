@@ -56,7 +56,30 @@
             padding-left:22px;
             
         }
-        
+
+
+        .partner-with-me {
+
+                    background-color:  transparent;
+                    color: #61bb46;
+                    padding: 10px;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    font-size:12px;
+                    border-radius: 5px;
+                    border:1px solid #61bb46;
+                    position: absolute;
+                    right: 373px;
+                    top: -9px;
+
+        }
+
+        .feedback-link {
+
+            left: -187px;
+
+        }
+
         
         
         

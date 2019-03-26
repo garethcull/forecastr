@@ -33,7 +33,7 @@
             
             position: relative;
             top: -31px;
-            left: 375px;
+            left: 130px;
             font-size: 16px;
             
         }
@@ -740,6 +740,7 @@
             padding-left: 50px;
             padding-right:50px;
             top:50px;
+            height:500px;
             
         }
         
@@ -899,7 +900,7 @@
         
         #features-list {
             
-            width: 737px;
+            width: 738px;
             margin: 0 auto;
             position: relative;
             top:50px;
