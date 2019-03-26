@@ -7,7 +7,7 @@ import requests
 from datetime import datetime
 from fbprophet import Prophet
 import pandas as pd
-from helper_v4 import forecastr,determine_timeframe,get_summary_stats,validate_model
+from helper_v4 import forecastr,determine_timeframe,get_summary_stats,validate_model,preprocessing
 import logging
 import time
 
@@ -163,13 +163,6 @@ def update_chart(message):
     
     #emit('model_validation', {'data':mape_score})
     
-    #print(forecast)
-    
-    
-    
-    
-    #print("UPDATING **********************")
-    #print(time_series_data)
     
     
 @socketio.on('reset')    
@@ -188,13 +181,14 @@ def main(message):
     # Convert data to a pandas DataFrame
     data = pd.DataFrame(data)
     
-    # Get list of column headers
-    column_headers = list(data)
+    #print(data)
+
+    # Let's do some preprocessing on this data to determine which column is the dimension vs. metric.
+    column_headers = preprocessing(data)
     
+    # Set the time unit and metrc unit names
     time_unit = column_headers[0]
     metric_unit = column_headers[1]
-    
-    #print([time_unit,metric_unit])
     
     # Determine whether the timeframe is daily, weekly, monthly, or yearly
     timeframe = determine_timeframe(data, time_unit)
@@ -210,8 +204,6 @@ def main(message):
     
     # Send data back to the client in the form of a label detected or text extracted.
     emit('render_uploaded_csv_data', {'data': [column_headers,message, timeframe, summary_stats,original_data]})
-    
-
     
 
 if __name__ == '__main__':

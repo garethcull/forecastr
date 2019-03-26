@@ -261,21 +261,97 @@ def get_summary_stats(data,column_headers):
     
     """
     
+    # Set the dimension and metrics 
     dimension = column_headers[0]
     metric = column_headers[1]
+
     
     
     time_unit_count = str(data[dimension].count())
-    #print(time_unit_count)
+    
+    
+    
+    
+    
+    print(data[metric].mean())
+    
     mean = str(round(data[metric].mean(),2))
+    print('string of the mean is ' + mean)
+    
+    
     std = str(round(data[metric].std(),2))
     minimum = str(round(data[metric].min(),2))
     maximum = str(round(data[metric].max(),2))
     
     sum_stats = [time_unit_count,mean,std,minimum,maximum]
-    #print(sum_stats)
+    print(sum_stats)
     
     return sum_stats
+
+
+
+
+def preprocessing(data):
+    
+    
+    """
+    
+    Background: This function will determine which columns are dimensions (time_unit) vs metrics, in addition to reviewing the metric data to see if there are any objects in that column.
+    
+    Input:
+    
+        data (df): A dataframe of the parsed data that was uploaded.
+        
+    Output:
+    
+        [time_unit,metric_unit]: the appropriate column header names for the dataset.
+    
+    """
+    
+    # Get list of column headers
+    column_headers = list(data)
+    
+    # Let's determine the column with a date
+    
+    col1 = column_headers[0]
+    col2 = column_headers[1]
+
+    # Get the first value in column 1, which is what is going to be checked.
+    col1_val = data[col1][0]
+
+    """
+    
+    TO DO: Pre-processing around the dtypes of both columns. If both are objects, I'll need to determine which is the column.
+    
+    TO DO: Emit any error messaging
+    
+    
+    print('The data type of this metric column is: ' + str(data[metric].dtype))
+    print(data[metric].head())
+    
+    data[metric] = data[metric].apply(lambda x: float(x))
+    
+    print(data[metric].dtype)
+    
+    
+    """
+    
+    
+    if isinstance(col1_val, int) or isinstance(col1_val, float):
+        print(str(col1_val) + ' this is a metric')
+        print('Setting time_unit as the second column')
+        time_unit = column_headers[1]
+        metric_unit = column_headers[0]
+        return [time_unit, metric_unit]
+    else:
+        print('Setting time_unit as the first column')
+        time_unit = column_headers[0]
+        metric_unit = column_headers[1]
+        return [time_unit, metric_unit]
+    
+    
+    
+    
 
 
 def determine_timeframe(data, time_unit):
@@ -302,14 +378,17 @@ def determine_timeframe(data, time_unit):
     
     
     # Determine whether the data is daily, weekly, monthly or yearly
+    date1 = data[time_unit][0]
+    date2 = data[time_unit][1]   
+    
     first_date = pd.Timestamp(data[time_unit][0])
     second_date = pd.Timestamp(data[time_unit][1])
     time_delta = second_date - first_date
     
     time_delta = int(str(time_delta).split(' ')[0])
     
-    #print([data[time_unit][0],data[time_unit][1]])
-    #print([second_date,first_date,time_delta])
+    print([data[time_unit][0],data[time_unit][1]])
+    print([second_date,first_date,time_delta])
     
     
     if time_delta == 1:

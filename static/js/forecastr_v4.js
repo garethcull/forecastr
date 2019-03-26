@@ -29,7 +29,7 @@ $(document).ready(function(){
        
         // CSV File that is uploaded
         var file = e.target.files[0];
-        console.log(file)
+        //console.log(file)
 
         // store results of the parsed csv in csvdata
         var csvdata;
@@ -39,7 +39,7 @@ $(document).ready(function(){
           dynamicTyping: true,                              // dynamicTyping: If true, numeric and boolean data will be converted to their type instead of remaining strings.    
           complete: function(results) {
             csvdata = results.data;
-            console.log(csvdata); 
+            //console.log(csvdata); 
             
             // Send the data to a python script app.py to process basic statistics on it  
             socket.emit('send_csv', {data:csvdata}); 
