@@ -96,6 +96,7 @@ Here are some links that I found very useful:
 - Flask: http://flask.pocoo.org/
 - SocketIO: https://flask-socketio.readthedocs.io/en/latest/
 - ChartJS: https://chartjs.org
+- Time Series Open Data Library: https://datamarket.com/data/list/?q=provider:tsdl
 - Stackoverflow: https://www.stackeroverflow.com
 - How to export data as a csv in javascript: https://halistechnology.com/2015/05/28/use-javascript-to-export-your-data-as-csv/
 - Implementing Facebook Prophet Efficiently: https://towardsdatascience.com/implementing-facebook-prophet-efficiently-c241305405a3
