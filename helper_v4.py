@@ -3,7 +3,8 @@ from fbprophet.diagnostics import cross_validation
 from fbprophet.diagnostics import performance_metrics
 import pandas as pd
 import numpy as np
-#import time
+from flask_socketio import SocketIO, emit
+import time
 
 
 def forecastr(data,forecast_settings,column_headers,freq_val,build_settings):
@@ -122,10 +123,14 @@ def forecastr(data,forecast_settings,column_headers,freq_val,build_settings):
     m = Prophet(**prophet_arg_vals)
     
     # Fit the Model - Side Note it would be interesting to time how long this takes by file size #start = time.time()
-    #start = time.time()
+    start = time.time()
     m.fit(data)
-    #end = time.time()
-    #print(end-start)
+    end = time.time()
+    print(end-start)
+    
+    # Status update
+    emit('processing', {'data': 'model has been fit'})
+    
     
     # Let's create a new data frame for the forecast which includes how long the user requested to forecast out in time units and by time unit type (eg. "D", "M","Y")
     future = m.make_future_dataframe(periods=fs_period, freq=freq_val)

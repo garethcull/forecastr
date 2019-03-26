@@ -9,6 +9,7 @@ from fbprophet import Prophet
 import pandas as pd
 from helper_v4 import forecastr,determine_timeframe,get_summary_stats,validate_model
 import logging
+import time
 
 
 
@@ -210,8 +211,6 @@ def main(message):
     # Send data back to the client in the form of a label detected or text extracted.
     emit('render_uploaded_csv_data', {'data': [column_headers,message, timeframe, summary_stats,original_data]})
     
-    # Probably need some sort of date checker function to properly format the date.
-    data[time_unit] = data[time_unit].apply(lambda x: pd.to_datetime(str(x)))
 
     
 
