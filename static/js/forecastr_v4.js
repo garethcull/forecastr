@@ -1,8 +1,9 @@
 $(document).ready(function(){
             
     
-    // **** Loading GIF **** //
+    // **** Loading Messaging - set to hide **** //
     $('#loading').css({ display: "none" });
+    $('#processing').css({display:"none"});
     
     
     
@@ -10,7 +11,7 @@ $(document).ready(function(){
     // **** Connect SocketIO **** //    
 
     // start up a SocketIO connection to the server - http(s):// needs to be set as http when run locally, and https when pushed to production.
-    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    var socket = io.connect('https://' + document.domain + ':' + location.port);
 
     // The callback function is invoked when a connection with the server is established.
     socket.on('connect', function() {
@@ -38,7 +39,7 @@ $(document).ready(function(){
           dynamicTyping: true,                              // dynamicTyping: If true, numeric and boolean data will be converted to their type instead of remaining strings.    
           complete: function(results) {
             csvdata = results.data;
-            // console.log(csvdata); 
+            console.log(csvdata); 
             
             // Send the data to a python script app.py to process basic statistics on it  
             socket.emit('send_csv', {data:csvdata}); 
@@ -257,6 +258,9 @@ $(document).ready(function(){
             // Forecast Settings with Original Data and time frequency
             settings = [selected,msg,freq];                       
             
+            // Capture time when user clicks generate forecast - to be used when calculating time to render forecast 
+            generate_forecast_time = Date.now();
+            
             
             // Let's Emit all of the forecast settings and orignal data back to the server side 
             socket.emit('forecast_settings', {data:settings}); 
@@ -273,6 +277,8 @@ $(document).ready(function(){
             $('#loading').css({ display: "block" });                            // Display a loading gif to signify that they model is being built
             window.scrollTo(0, 0);
             
+            // Include Message to the User about estimated length of time
+            $('#processing').css({display:"block"});
             
             // Clear any data that was set in step 2 - this will get refreshed upon update of step 3.             
             original_dataset = '';
@@ -320,6 +326,7 @@ $(document).ready(function(){
         // First, let's hide the loading gif and then display the chart canvas 
         $('img#loading').css({ display: "none" });
         $('#myChart').css({ display: "block" });
+        $('#processing').css({display:"none"});
 
         
         
@@ -385,11 +392,20 @@ $(document).ready(function(){
     });
         
 
+        // Timestamp of forecast render
+        
+        var forecast_render_time = Date.now();
+        var time_to_render_forecast = ((forecast_render_time - generate_forecast_time)/1000).toFixed(2);
+        console.log(time_to_render_forecast);
+        
+        
         
         // ****** GOOGLE ANALYTICS EVENT ****** //
         
         // Send an event to the data layer indicating that the forecast chart has been successfully rendered on Step 3: View Forecast      
-        window.dataLayer.push({'event': 'step3-render-forecast'});          
+        window.dataLayer.push({'event': 'step3-render-forecast',
+                              'dimension1': time_to_render_forecast                              
+                              });          
         
         
         // ************ Original Dataset Shape ***************** //
@@ -464,6 +480,8 @@ $(document).ready(function(){
             myChart.destroy()
             $('#myChart').css({ display: "none" });
             $('#loading').css({ display: "block" });
+            $('#processing').css({display:"block"});
+
             
             // IMPORTANT: Set data_for_csv_export to blank so not to store multiple csvs for download. 
             data_for_csv_export = '';
@@ -613,7 +631,7 @@ $(document).ready(function(){
     socket.on('processing', function(msg) {
 
         // Update UI with steps processed on step 3: View Forecast
-
+        console.log('model has been fit')
         
     });  
     
