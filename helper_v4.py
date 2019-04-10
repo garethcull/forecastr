@@ -336,6 +336,42 @@ def preprocessing(data):
     
     """
     
+    # Check to see if the data has any null values
+    
+    print('Is there any null values in this data? ' + str(data.isnull().values.any()))
+    
+    # If there is a null value in the dataset, locate it and emit the location of the null value back to the client, else continue:
+    
+    print(data.tail())
+    
+    do_nulls_exist = data.isnull().values.any()
+    
+    if do_nulls_exist == True:
+        print('found a null value')
+        null_rows = pd.isnull(data).any(1).nonzero()[0]
+        print('######### ORIGINAL ROWS THAT NEED UPDATING ##############')
+        print(null_rows)
+        # Need to add 2 to each value in null_rows because there 
+        
+        print('######### ROWS + 2 = ACTUAL ROW NUMBERS IN CSV ##############')
+        update_these_rows = []
+        for x in null_rows:
+            update_these_rows.append(int(x)+2)
+        
+        print(update_these_rows)
+        
+        emit('error', {'data': update_these_rows})
+        
+        
+        
+        
+        
+        
+    else:
+        print('no nulls found')
+    
+    
+    
     
     if isinstance(col1_val, int) or isinstance(col1_val, float):
         print(str(col1_val) + ' this is a metric')

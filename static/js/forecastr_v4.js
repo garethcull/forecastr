@@ -624,7 +624,13 @@ $(document).ready(function(){
     
     // ******** THE CODE BELOW IS PLACEHOLDER CODE FOR MODEL VALIDATION AND WILL BE UPDATED IN A FUTURE RELEASE ******** //
     
-    
+    $('#reload-button').on('click', function() {
+        
+        // Refresh the app 
+        location.reload(true);
+        
+        
+    });
     
     // Display updates to user when the data is processing 
     
@@ -636,10 +642,18 @@ $(document).ready(function(){
     });  
     
     
-    socket.on('error', function() {
+    socket.on('error', function(msg) {
+        
+        // Store msg.data into a variable called arr
+        var error_data = msg.data;
+        
+        
+        
+         
 
         // Update UI with error notice
-
+        $('#user-messaging').css({display:"block"});
+        $('#error-message').html('<b>Error: </b> Whoops! You may want to check the following rows in your csv for null values: <br/>' + 'Row #: ' + error_data)
         
     });  
     

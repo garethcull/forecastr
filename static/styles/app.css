@@ -560,6 +560,39 @@
         
          /* ******************* STEP TWO STYLING ****************************** */
         
+        #user-messaging {
+        
+            width: 100%;
+            background-color: #fff7a5;
+            height: 43px;
+            padding-left: 16px;
+            padding-top: 4px;
+            top: 4px;
+            position: relative; 
+            display:none;
+            
+        
+        }
+
+        #reload-button {
+
+            background-color:  transparent;
+            color: #000;
+            padding: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size:9px;
+            border-radius: 5px;
+            border:1px solid #000;
+            position:relative;
+            float:right;
+            margin-left:10px; 
+            right:294px;
+            top:-39px;
+
+
+        }
+
         
         #menu1 {
             
