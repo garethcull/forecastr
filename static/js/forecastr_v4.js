@@ -11,7 +11,7 @@ $(document).ready(function(){
     // **** Connect SocketIO **** //    
 
     // start up a SocketIO connection to the server - http(s):// needs to be set as http when run locally, and https when pushed to production.
-    var socket = io.connect('https://' + document.domain + ':' + location.port);
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
 
     // The callback function is invoked when a connection with the server is established.
     socket.on('connect', function() {
@@ -332,6 +332,7 @@ $(document).ready(function(){
         
         // Store msg.data into a variable called arr
         arr = msg.data;
+        console.log(arr);
         
         
         // Define some variables that are going to be used to render the data in Step 3: View Forecast
@@ -344,13 +345,31 @@ $(document).ready(function(){
         var forecast_length = forecast_settings[1]  // length of forecast in days, months, years
         var capacity = forecast_settings[2]         // Upper Limit (used with logistic model)
         var min_saturation = forecast_settings[3]   // Lower Limit (used with logistic model)
-        
+
+        // We'll
+
+        var forecasted_vals = arr[8]
+
+
+        var forecast_sum = forecasted_vals[0]       // forecasted sum
+        var actuals_sum = forecasted_vals[1]        // actuals sum
+        var difference = forecasted_vals[2]         // difference
+
+        console.log(difference);
+
         
         // Let's pre-populate the right hand settings with the appropriate data used to build the basic forecast
         
         $('#forecast-length').val(forecast_length);
         $('#update-capacity').val(capacity);
         $('#update-min-saturation').val(min_saturation);
+
+        // Render the % difference between actuals and forecasted sums
+
+        $('#metrics-diff').html(difference);
+        $('#metrics-forecastsum').html(forecast_sum);
+        $('#metrics-actualssum').html(actuals_sum);
+
         
         
         

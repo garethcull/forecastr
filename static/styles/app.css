@@ -647,13 +647,13 @@
         }
         
         
-        #helpful-stats {
+        .helpful-stats {
             position: absolute;
             left: -18px;
             
         }
         
-        #helpful-stats li {
+        .helpful-stats li {
             
             float: left;
             position:relative;

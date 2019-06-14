@@ -95,9 +95,11 @@ def forecast_settings(message):
     dates = forecast[1]
     model = forecast[2]
     csv_export = forecast[3]
-    
+    forecasted_vals = forecast[4]
+
+
     # Send data back to the client
-    data_back_to_client = [dates,y_hat,y,forecast_settings,column_headers,freq,original_dataset,csv_export]
+    data_back_to_client = [dates,y_hat,y,forecast_settings,column_headers,freq,original_dataset,csv_export, forecasted_vals]
     #print(data_back_to_client)
     
     
@@ -153,9 +155,10 @@ def update_chart(message):
     dates = forecast[1]
     model = forecast[2]
     csv_export = forecast[3]
+    forecasted_vals = forecast[4]
     
     # Send data back to the client - took out original dataset
-    data_back_to_client = [dates,y_hat,y,forecast_settings,column_headers,freq,original_dataset,csv_export]
+    data_back_to_client = [dates,y_hat,y,forecast_settings,column_headers,freq,original_dataset,csv_export,forecasted_vals]
     emit('render_forecast_chart', {'data': data_back_to_client})
     
     # Validate Model

@@ -154,8 +154,40 @@ def forecastr(data,forecast_settings,column_headers,freq_val,build_settings):
     
     y_hat = forecast['yhat'].tolist()
     dates = forecast['ds'].apply(lambda x: str(x).split(' ')[0]).tolist()
-    
 
+    ##### Lets see how the forecast compares to historical performance #####
+
+    # First, lets sum up the forecasted metric
+    forecast_sum = forecast['yhat'][-fs_period:].sum()
+
+
+
+    # Now lets sum up the actuals for the same time interval as we predicted
+    actual_sum = float(data['y'][-fs_period:].sum())
+
+    difference = '{0:.2%}'.format(((forecast_sum - actual_sum) / forecast_sum))
+
+    forecasted_vals = [forecast_sum,actual_sum,difference]
+
+
+
+
+
+
+    '''
+    
+    
+    # Lets compare those two numbers, if forecast_sum is greater than actual, calculate the increase.  Else, calculate the decrease
+    if forecast_sum - actual_sum > 0:  # this if else handles percent increase vs. decrease
+        difference = '{0:.2%}'.format(((forecast_sum - actual_sum) / forecast_sum))
+        print("*********** DIFFERENCE IS ********")
+        print(difference)
+    else:
+        difference = '{0:.2f}'.format(((actual_sum - forecast_sum) / actual_sum))
+        print("*********** DIFFERENCE IS ********")
+        print(difference)
+
+    '''
     
     ####### Formatting data for CSV Export Functionality ##########
     
@@ -177,9 +209,14 @@ def forecastr(data,forecast_settings,column_headers,freq_val,build_settings):
     
     # Create dictionary format for sending to csv
     csv_ready_for_export = export_formatted.to_dict('records')
-    
-    
-    return [y_hat,dates,m,csv_ready_for_export]
+
+
+
+    print(y_hat)
+    print(csv_ready_for_export)
+    print(forecasted_vals)
+
+    return [y_hat,dates,m,csv_ready_for_export,forecasted_vals]
     
  
     

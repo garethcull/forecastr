@@ -174,7 +174,7 @@
                                 <canvas id="originalChart"></canvas>
                                 <h5>SUMMARY STATISTICS ABOUT YOUR DATA</h5><br/>
     
-                                <ol id='helpful-stats'>
+                                <ol class='helpful-stats'>
                                     <li class='helpful-title mean'>Mean<br><span id='metrics-mean' class='summary-data'>--</span></li>
                                     <li class='helpful-title std'>Std<br><span id='metrics-std' class='summary-data'>--</span></li>
                                     <li class='helpful-title min'>Min<br><span id='metrics-min' class='summary-data'>--</span></li>
@@ -235,6 +235,13 @@
                                 Your forecast is being built. Larger datasets may experience wait times of up to 1 minute in the Alpha Version of this site.
                                 </p>
                                 <canvas id="myChart"></canvas>
+                                <h5>FORECAST SUMMARY STATISTICS</h5><br/>
+
+                                <ol class='helpful-stats'>
+                                    <li class='helpful-title sum'>Forecast (Sum)<br><span id='metrics-forecastsum' class='summary-data'>--</span></li>
+                                    <li class='helpful-title difference'>Actuals (Sum)<br><span id='metrics-actualssum' class='summary-data'>--</span></li>
+                                    <li class='helpful-title difference'>Forecast vs. Actual<br><span id='metrics-diff' class='summary-data'>--</span></li>
+                                </ol>
 
                             </div> 
                             
