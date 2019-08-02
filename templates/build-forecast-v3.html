@@ -12,15 +12,15 @@
     <meta prefix="og: http://ogp.me/ns#" property='og:image' content='https://www.garethcull.com/images/social_share_forecastr.png'/>
     <meta prefix="og: http://ogp.me/ns#" property='og:description' content='Create a time series forecast in 3 easy steps. Upload CSV, Setup, Generate.'/>
     <meta prefix="og: http://ogp.me/ns#" property='og:url' content='https://forecaster-io.herokuapp.com/app/'/>
-    
-    
-    
+
+
+
     <!-- Google Tag Manager Data Layer -->
     <script>
       dataLayer = [];
     </script>
     <!-- End Google Tag Manager Data Layer -->
-    
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -28,42 +28,44 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-PP5GR6W');</script>
     <!-- End Google Tag Manager -->
-    
+
     <!-- Stylesheets -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
-    <link href="{{url_for('static', filename='styles/app.css')}}" rel="stylesheet"> 
-    
+    <link href="{{url_for('static', filename='styles/app.css')}}" rel="stylesheet">
+
     <!-- Scripts -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.slim.js"></script>    
-    <script type="text/javascript" src="{{url_for('static', filename='js/papaparse.js')}}" ></script>    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.slim.js"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/papaparse.js')}}" ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
-    <script type="text/javascript" src="{{url_for('static', filename='js/forecastr_v4.js')}}" ></script> 
+    <script type="text/javascript" src="{{url_for('static', filename='js/forecastr_v4.js')}}" ></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
 </head>
 <body>
-    
+
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PP5GR6W"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    
+
     <div class='container'>
-    
+
             <div class="header">
 
                 <h3 class="data-narrative-logo">forecastr<span class='alpha'>ALPHA</span></h3>
-                
+
                 <nav>
                     <ul class="nav-bar">
-                        <li><a class='nav-link aboutapp' href="/">about app</a></li>  
-                        <li><a class='nav-link feedback-link' href="https://goo.gl/forms/9Dx5dAMzCtF2yXAy2">feedback</a></li> 
+                        <li><a class='nav-link aboutapp' href="/">about app</a></li>
+                        <li><a class='nav-link feedback-link' href="https://goo.gl/forms/9Dx5dAMzCtF2yXAy2">feedback</a></li>
                         <li><a class='nav-link partner-with-me' href="https://www.linkedin.com/in/garethcull/">NEED AN ANALYTICS PARTNER?</a></li>
                     </ul>
                 </nav>
-                
+
                 <div id='nav-bg'></div>
                 <ul class="nav nav-tabs">
                       <li class="active"><a data-toggle="tab" href="#step1">STEP 1: UPLOAD A CSV</a></li>
@@ -73,57 +75,57 @@
                 <div id='subnav-bg'></div>
 
         </div>
-        
+
         <section id='main'>
 
                 <div id="flow">
 
                     <div class="tab-content">
-                        
+
                       <div id="step1" class="tab-pane fade in active">
 
                         <div class='main-content'>
-                            
+
                             <h3 class='step-title'>STEP 1: UPLOAD A CSV</h3><br/>
-                            <h5>ABOUT CSV FORMAT</h5><br/>                                
+                            <h5>ABOUT CSV FORMAT</h5><br/>
                             <p>Your file should contain 2 columns and look something like this (when viewing in excel):</p><br/>
                             <img class="csv-example" src="{{url_for('static', filename='img/csv_file_example.png')}}"/>
                             <br/>
                             <br/>
                             <p>The columns should be as follows:</p>
-                            
+
                             <ol>
-                                <li>1. A date formatted as yyyy-mm-dd</li> 
+                                <li>1. A date formatted as yyyy-mm-dd</li>
                                 <li>2. A Metric</li>
-                            </ol>                    
-                            
+                            </ol>
+
                             <br/>
-                            <h5>READY TO GO? LET'S BUILD A FORECAST!</h5>    
+                            <h5>READY TO GO? LET'S BUILD A FORECAST!</h5>
                             <br/>
 
                             <p>Simply click on the 'Choose file' CTA and upload your CSV to the app. </p><br/>
-                            <input type="file" id="csv-file" name="files"/>  
+                            <input type="file" id="csv-file" name="files"/>
 
                         </div>
-                          
+
                         <div id='sample-files'>
 
                             <div class='side-bar-title-section'>
                                 <img class="csv-title-icon" src="{{url_for('static', filename='img/csv_icon_title.png')}}"/>
                                 <h4 class="side-nav-title">DON'T HAVE A CSV <br/>READY TO USE?</h4>
-                            </div>    
+                            </div>
                             <br>
                             <h5>SAMPLE DATASETS</h5>
                             <p>Try forecastr with one of the sample datasets below.</p>
                             <br>
-                            
+
                             <table class='table'>
                                 <thead>
-                                    <th></th>    
+                                    <th></th>
                                     <th>Dataset</th>
                                     <th>Series Type</th>
                                 </thead>
-                                
+
                                     <tr>
                                         <td><a href="{{url_for('static', filename='sampledata/shampoo_sales.csv')}}"><img class='download-csv-icon' src="{{url_for('static', filename='img/download_arrow.png')}}"/></a></td>
                                         <td>Shampoos Sales</td>
@@ -153,50 +155,50 @@
                         </div>
 
                       </div>
-                        
+
                       <div id="step2" class="tab-pane fade">
-                          
+
                         <div id='user-messaging'>
-                        
-                            <p id='error-message'></p>    
+
+                            <p id='error-message'></p>
                             <a id='reload-button' href="#">TRY AGAIN</a>
-                        
-                        </div>  
-                          
+
+                        </div>
+
                         <h3 class='step-title'>REVIEW DATA: PRE-FORECAST</h3>
                         <br>
 
                         <div id='stats-summmary'>
-                            
+
                             <h5 id='original-data-chart-title' class='sub-header'>INSERT TITLE</h5>
                             <div id='build-basic-forecast'>
 
                                 <canvas id="originalChart"></canvas>
                                 <h5>SUMMARY STATISTICS ABOUT YOUR DATA</h5><br/>
-    
+
                                 <ol class='helpful-stats'>
                                     <li class='helpful-title mean'>Mean<br><span id='metrics-mean' class='summary-data'>--</span></li>
                                     <li class='helpful-title std'>Std<br><span id='metrics-std' class='summary-data'>--</span></li>
                                     <li class='helpful-title min'>Min<br><span id='metrics-min' class='summary-data'>--</span></li>
                                     <li class='helpful-title max'>Max<br><span id='metrics-max' class='summary-data'>--</span></li>
-                                </ol>  
+                                </ol>
 
-                            </div>        
+                            </div>
 
                         </div>
-                          
+
                         <div id='build-forecast-sidenav'>
-                            
-                            <img id="forecast-icon" src="{{url_for('static', filename='img/forecast_icon.png')}}"/>  
-                            <h4 class='side-nav-title build-title'>SETUP BASIC FORECAST</h4>  
+
+                            <img id="forecast-icon" src="{{url_for('static', filename='img/forecast_icon.png')}}"/>
+                            <h4 class='side-nav-title build-title'>SETUP BASIC FORECAST</h4>
                             <div id='forecast-out'>
                                 <h5 class='sub-header'><b>Forecast Length</b></h5>
                                 <p>How many <span id='timeframe'>days</span> do you want to forecast out?</p>
                                 <input id="days-to-forecast" type="number"><br><br>
                             </div>
-                            
+
                             <div id='forecast-model-type'>
-                                
+
                                 <h5 class='sub-header'>Forecast Model</h5>
                                 <p>What type of forecasting model would you like to use?</p>
                                 <input class='option' type="radio" name="selection" value="linear"> Linear<br>
@@ -207,27 +209,27 @@
 
                                 Upper: <input id="upper-limit" type="number"><br>
                                 Lower: <input id="lower-limit" type="number"><br><br>
-                                
+
                             </div>
-                            
-                            <button id="generate-forecast">GENERATE FORECAST</button> 
+
+                            <button id="generate-forecast">GENERATE FORECAST</button>
 
                         </div>
 
-                    </div>  
+                    </div>
 
 
                     <div id="step3" class="tab-pane fade">
 
                         <div id='forecast-content'>
-                            
+
                             <h3 class='step-title'>FORECAST</h3>
                             <button id='reset-button'>RESET</button>
                             <button id="download-forecast-cta">EXPORT FORECAST CSV</button>
 
                             <!--       Chart.js Canvas Tag -->
                             <div id='chart-container'>
-                                
+
                                 <br/>
                                 <h5 id='chart-title' class='sub-header'>INSERT TITLE</h5>
                                 <img id="loading" src="{{url_for('static', filename='img/loading.gif')}}"/>
@@ -235,25 +237,37 @@
                                 Your forecast is being built. Larger datasets may experience wait times of up to 1 minute in the Alpha Version of this site.
                                 </p>
                                 <canvas id="myChart"></canvas>
-                                <h5>FORECAST SUMMARY STATISTICS</h5><br/>
 
-                                <ol class='helpful-stats'>
-                                    <li class='helpful-title sum'>Forecast (Sum)<br><span id='metrics-forecastsum' class='summary-data'>--</span></li>
-                                    <li class='helpful-title difference'>Actuals (Sum)<br><span id='metrics-actualssum' class='summary-data'>--</span></li>
-                                    <li class='helpful-title difference'>Forecast vs. Actual<br><span id='metrics-diff' class='summary-data'>--</span></li>
+                            <!-- Previous vs Future Dropdown Stats -->
+
+                                <h5>PREVIOUS VS. FUTURE FORECAST STATISTICS</h5><br/>
+                                <select class="form-control arguments" id="summary-stats">
+                                        <option value="" selected disabled>COMPARISON METRIC</option>
+                                    <option value="sum" active>Sum</option>
+                                    <option value="average">Average</option>
+                                </select>
+
+                                <ol class='helpful-stats' id="sum" style="display:none">
+                                    <li class='helpful-title difference'>Previous <span id="forecast-length-comp-sum-past"></span> <span id="timeframe-comp-sum-past"></span> (Sum)<br><span id='metrics-actualssum' class='summary-data'>--</span></li>
+                                    <li class='helpful-title sum'>Next Forecasted <span id="forecast-length-comp-sum-percent"></span> <span id="timeframe-comp-sum-percent"></span><br><span id='metrics-forecastsum' class='summary-data'>--</span></li>
+                                    <li class='helpful-title difference'>Forecast vs. Past <br><span id='metrics-diff' class='summary-data'>--</span></li>
                                 </ol>
+                                <ol class='helpful-stats' id="average" style="display:none">
+                                    <li class='helpful-title difference'>Previous <span id="forecast-length-comp-avg-past"></span> <span id="timeframe-comp-avg-past"></span> (Average)<br><span id='metrics-actualssum_mean' class='summary-data'>--</span></li>
+                                    <li class='helpful-title sum'>Next Forecasted <span id="forecast-length-comp-avg-percent"></span> <span id="timeframe-comp-avg-percent"></span><br><span id='metrics-forecastsum_mean' class='summary-data'>--</span></li>
+                                    <li class='helpful-title difference'>Forecast vs. Past <br><span id='metrics-diff_mean' class='summary-data'>--</span></li>
+                                </ol>
+                            </div>
 
-                            </div> 
-                            
                         </div>
-                        
+
                         <div id='filters'>
 
                             <div class='side-bar-title-section filter-title-section'>
-                                
-                                <img id='filter-icon' src="{{url_for('static', filename='img/filter_icon.png')}}"/>  
+
+                                <img id='filter-icon' src="{{url_for('static', filename='img/filter_icon.png')}}"/>
                                 <h4>FILTERS</h4>
-                                
+
                             </div>
 
                             <div class='filter-groups' id='growth-filters'>
@@ -278,9 +292,9 @@
                                     <span class='argument-name'>LOWER LIMIT TO FORECAST</span><br>
                                     <input class='num-field' id="update-min-saturation" type="number">
                                 </li>
-                            
+
                             </div>
-                            
+
                             <div class='filter-groups' id='seasonality-filters'>
 
                                 <li class='param-header'>SEASONALITY (?)</li>
@@ -315,30 +329,30 @@
                                     <span class='argument-name'>CHANGEPOINT PRIOR SCALE</span><br>
                                     <input class='num-field' id="changepoints-prior-scale" type="number">
                                 </li>
-                                
+
                             </div>
 
-                            <button class='green-cta update-cta' id='update-chart'>UPDATE CHART</button> 
+                            <button class='green-cta update-cta' id='update-chart'>UPDATE CHART</button>
 
-                        </div> 
+                        </div>
                     </div>
                 </div>
-            </div>    
-        </section>    
+            </div>
+        </section>
     </div>
-    
+
     <footer class="footer">
 
             <ul>
                 <li><h4>About</h4></li>
                 <li><a data-element='outbound-cta' data-val='https://facebook.github.io/prophet/docs/quick_start.html' href="https://facebook.github.io/prophet/docs/quick_start.html">Facebook Prophet</a></li>
                 <li>For more hyper-parameter tweaking, pip install fbprophet.</li>
-                <br/>    
-                <li>Copyright 2019 - Made in Toronto by <a data-element='outbound-cta' data-val='https://www.garethcull.com' href="https://www.garethcull.com/" >Gareth Cull</a>.</li>    
+                <br/>
+                <li>Copyright 2019 - Made in Toronto by <a data-element='outbound-cta' data-val='https://www.garethcull.com' href="https://www.garethcull.com/" >Gareth Cull</a>.</li>
             </ul>
-                
-        
+
+
     </footer>
 
-</body>    
+</body>
 </html>
