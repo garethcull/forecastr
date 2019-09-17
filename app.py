@@ -161,7 +161,7 @@ def update_chart(message):
     forecasted_vals_mean = forecast[5]
 
     # Send data back to the client - took out original dataset
-    data_back_to_client = [dates,y_hat,y,forecast_settings,column_headers,freq,original_dataset,csv_export,forecasted_vals, forecasted_mean]
+    data_back_to_client = [dates,y_hat,y,forecast_settings,column_headers,freq,original_dataset,csv_export,forecasted_vals, forecasted_vals_mean]
     emit('render_forecast_chart', {'data': data_back_to_client})
 
     # Validate Model
