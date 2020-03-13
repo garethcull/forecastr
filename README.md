@@ -57,6 +57,17 @@ window.dataLayer.push({'event': 'step2-pre-forecast-chart-rendered'});
 
 I then use Google Tag Manager to create rules that listen for any ux events and then send that data to Google Analytics.
 
+### Data Studio Reporting on the User Experience
+
+I've put together a few dashboards in Google Data Studio that review how users interact with the forecastr user experience. These report include:
+
+- How Users Engage with the Product Page and what web elements they interact with
+- A summary report looking at kpis related to user acquisition, engagement, retention and growth.
+
+Feel free to review and copy them for your own clones / downloads of forecastr. 
+
+You can find these reports at: https://www.datanarrative.io/
+
 
 ### Requirements<br/>
 
