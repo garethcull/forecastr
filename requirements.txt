@@ -1,12 +1,42 @@
 DateTime==4.3
 eventlet==0.24.1
+
+# Flask is a lightweight WSGI web application framework.
+# https://github.com/pallets/flask
 Flask==1.0.2
+
+# Socket.IO integration for Flask applications.
+# https://github.com/miguelgrinberg/Flask-SocketIO
 Flask-SocketIO==3.0.2
+
+# Flask-Session is an extension for Flask that adds support for Server-side Session to your application.
+# https://pythonhosted.org/Flask-Session/
+flask-session==0.3.1
+
+
+# Prophet - Tool for producing high quality forecasts for time series data
+# that has multiple seasonality with linear or non-linear growth.
+# https://github.com/facebook/prophet
+# fbprophet has multiple dependencies like `Cython`, `numpy`, and `pystan` which are specified in
+# requirements-1.txt
 fbprophet==0.3.post2
+
+
+# Gunicorn - 'Green Unicorn' is a WSGI HTTP Server for UNIX
+# https://github.com/benoitc/gunicorn
 gunicorn==19.9.0
-numpy==1.15.4
-pandas==0.23.0
+
+
+# Pandas - Python Data Analysis Library
+# https://pandas.pydata.org/
+pandas==1.2.3
+
+# NumPy is a Python library used for working with arrays
+# https://numpy.org/
+numpy==1.18.1
+
 python-dateutil==2.7.5
 python-engineio==2.3.2
 python-socketio==2.0.0
-requests==2.20.1
+
+requests==2.21.0

@@ -93,8 +93,9 @@ On the client side:
 1. Clone this repo and make sure you install all of the above dependencies. 
 2. Open forecastr_v4.js and make sure that this line contains http:// and not https:// (which is used in production on heroku)
 https://github.com/garethcull/forecastr/blob/master/static/js/forecastr_v4.js#L13
-3. $ python app.py
-4. Open http://localhost:5000/
+3. $ python setup.py
+4. $ python app.py
+5. Open http://localhost:5000/
 
 #### Blog Post on what I Learned Building a UI on top of Facebook Prophet
 https://www.garethcull.com/2019/03/20/what-i-learned-building-a-ui-on-top-of-facebook-prophet/
