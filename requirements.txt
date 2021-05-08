@@ -1,5 +1,5 @@
 DateTime==4.3
-eventlet==0.24.1
+eventlet==0.31.0
 Flask==1.0.2
 Flask-SocketIO==3.0.2
 fbprophet==0.3.post2
