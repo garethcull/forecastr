@@ -1,17 +1,12 @@
 # Import Modules
 
+import logging
+
+import pandas as pd
 from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
-import numpy as np
-import requests
-from datetime import datetime
-from fbprophet import Prophet
-import pandas as pd
-from helper_v4 import forecastr,determine_timeframe,get_summary_stats,validate_model,preprocessing
-import logging
-import time
 
-
+from helper_v4 import forecastr, determine_timeframe, get_summary_stats, preprocessing
 
 # Socket IO Flask App Setup
 
@@ -19,12 +14,10 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, logger=False, engineio_logger=False)
 
-
 # Suppress logs except for error: https://stackoverflow.com/questions/43487264/disabling-logger-in-flask-socket-io
 logging.getLogger('socketio').setLevel(logging.ERROR)
 logging.getLogger('engineio').setLevel(logging.ERROR)
 logging.getLogger('geventwebsocket.handler').setLevel(logging.ERROR)
-
 
 
 @app.after_request
@@ -39,27 +32,27 @@ def add_header(r):
     r.headers['Cache-Control'] = 'public, max-age=0'
     return r
 
+
 # Flask App
 
 @app.route('/app/')
 def index():
-    return render_template('build-forecast-v3.html') # Application
+    return render_template('build-forecast-v3.html')  # Application
+
 
 @app.route('/')
 def about():
-    return render_template('forecastr.html') # Product Page
+    return render_template('forecastr.html')  # Product Page
 
 
 @socketio.on('connection_msg')
 def connected(message):
-
     data = message
     print(data)
 
 
 @socketio.on('forecast_settings')
 def forecast_settings(message):
-
     # Initial forecast settings - the first time the user sends forecast settings through the app - will use this value in forecastr method
     build_settings = 'initial'
 
@@ -69,9 +62,9 @@ def forecast_settings(message):
     # Keep Original Data in Exisiting Structure
     original_dataset = data[1]['data'][1]['data']
 
-    #print("******************** ORIGINAL DATASET *****************************")
-    #print(original_dataset)
-    #print("******************** ORIGINAL DATASET *****************************")
+    # print("******************** ORIGINAL DATASET *****************************")
+    # print(original_dataset)
+    # print("******************** ORIGINAL DATASET *****************************")
 
     # Extract info from forecast_settings message
     time_series_data = pd.DataFrame(data[1]['data'][1]['data'])
@@ -89,7 +82,7 @@ def forecast_settings(message):
     y = time_series_data[metric].tolist()
 
     # Use Facebook Prophet through forecastr method
-    forecast = forecastr(time_series_data,forecast_settings,column_headers,freq,build_settings)
+    forecast = forecastr(time_series_data, forecast_settings, column_headers, freq, build_settings)
 
     # Need to convert forecast back into a list / array for y, y_hat and date so it can be properly graphed with chartjs
     y_hat = forecast[0]
@@ -99,25 +92,21 @@ def forecast_settings(message):
     forecasted_vals = forecast[4]
     forecasted_vals_mean = forecast[5]
 
-
     # Send data back to the client
-    data_back_to_client = [dates,y_hat,y,forecast_settings,column_headers,freq,original_dataset,csv_export, forecasted_vals, forecasted_vals_mean]
-    #print(data_back_to_client)
-
+    data_back_to_client = [dates, y_hat, y, forecast_settings, column_headers, freq, original_dataset, csv_export,
+                           forecasted_vals, forecasted_vals_mean]
+    # print(data_back_to_client)
 
     emit('render_forecast_chart', {'data': data_back_to_client})
 
-
-
     # Validate Model
-    #mape_score = validate_model(model,dates)
+    # mape_score = validate_model(model,dates)
 
-    #emit('model_validation', {'data':mape_score})
+    # emit('model_validation', {'data':mape_score})
 
 
 @socketio.on('update_chart_settings')
 def update_chart(message):
-
     # This is an update to the initial forecast settings. The user has changed their settings on Step 3, so we set build_settings to update.
     build_settings = 'update'
 
@@ -128,9 +117,9 @@ def update_chart(message):
     original_dataset = time_series_data
     time_series_data = pd.DataFrame(time_series_data)
 
-    #print("********* TIME SERIES DF ****************")
-    #print(time_series_data.head())
-    #print("********* TIME SERIES DF ****************")
+    # print("********* TIME SERIES DF ****************")
+    # print(time_series_data.head())
+    # print("********* TIME SERIES DF ****************")
 
     forecast_settings = data[1]
     column_headers = data[2]
@@ -143,14 +132,13 @@ def update_chart(message):
     # Make sure time_unit is converted to datetime in order to join in helper_v3
     time_series_data[time_unit] = time_series_data[time_unit].apply(lambda x: pd.to_datetime(str(x)))
 
-
-    #print([time_unit,metric])
+    # print([time_unit,metric])
 
     # Original Data
     y = time_series_data[metric].tolist()
 
     # Use Facebook Prophet through forecastr method
-    forecast = forecastr(time_series_data,forecast_settings,column_headers,freq,build_settings)
+    forecast = forecastr(time_series_data, forecast_settings, column_headers, freq, build_settings)
 
     # Need to convert forecast back into a list / array for y, y_hat and date so it can be properly graphed with chartjs
     y_hat = forecast[0]
@@ -161,33 +149,31 @@ def update_chart(message):
     forecasted_vals_mean = forecast[5]
 
     # Send data back to the client - took out original dataset
-    data_back_to_client = [dates,y_hat,y,forecast_settings,column_headers,freq,original_dataset,csv_export,forecasted_vals, forecasted_vals_mean]
+    data_back_to_client = [dates, y_hat, y, forecast_settings, column_headers, freq, original_dataset, csv_export,
+                           forecasted_vals, forecasted_vals_mean]
     emit('render_forecast_chart', {'data': data_back_to_client})
 
     # Validate Model
-    #mape_score = validate_model(model,dates)
+    # mape_score = validate_model(model,dates)
 
-    #emit('model_validation', {'data':mape_score})
-
+    # emit('model_validation', {'data':mape_score})
 
 
 @socketio.on('reset')
 def reset(message):
-
     data = message['data']
-    #print(data)
+    # print(data)
 
 
 @socketio.on('send_csv')
 def main(message):
-
     # Store message['data'] in data
     data = message['data']
 
     # Convert data to a pandas DataFrame
     data = pd.DataFrame(data)
 
-    #print(data)
+    # print(data)
 
     # Let's do some preprocessing on this data to determine which column is the dimension vs. metric.
     column_headers = preprocessing(data)
@@ -200,17 +186,17 @@ def main(message):
     timeframe = determine_timeframe(data, time_unit)
 
     # Get summary statistics about original dataset
-    summary_stats = get_summary_stats(data,column_headers)
+    summary_stats = get_summary_stats(data, column_headers)
 
     # Send original data to a list
     dimension = data[time_unit].tolist()
     metric = data[metric_unit].tolist()
 
-    original_data = [dimension,metric]
+    original_data = [dimension, metric]
 
     # Send data back to the client in the form of a label detected or text extracted.
-    emit('render_uploaded_csv_data', {'data': [column_headers,message, timeframe, summary_stats,original_data]})
+    emit('render_uploaded_csv_data', {'data': [column_headers, message, timeframe, summary_stats, original_data]})
 
 
 if __name__ == '__main__':
-    socketio.run(app, log_output=False)
+    socketio.run(app, log_output=True, debug=True)
