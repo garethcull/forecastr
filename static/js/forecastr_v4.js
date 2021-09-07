@@ -1,20 +1,17 @@
-$(document).ready(function(){
-
+$(document).ready(function () {
 
     // **** Loading Messaging - set to hide **** //
-    $('#loading').css({ display: "none" });
-    $('#processing').css({display:"none"});
-
-
+    $('#loading').css({display: "none"});
+    $('#processing').css({display: "none"});
 
 
     // **** Connect SocketIO **** //
 
     // start up a SocketIO connection to the server - http(s):// needs to be set as http when run locally, and https when pushed to production.
-    var socket = io.connect('https://' + document.domain + ':' + location.port);
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
 
     // The callback function is invoked when a connection with the server is established.
-    socket.on('connect', function() {
+    socket.on('connect', function () {
 
         // Successful connection message
         socket.emit('connection_msg', {data: 'I\'m connected!'});
@@ -24,38 +21,56 @@ $(document).ready(function(){
 
     // **** Function to Handle Data from CSV File **** //
 
+    function useFile() {
+        console.log($(this).val());
+        //console.log(csvdata);
+
+        // Send the data to a python script app.py to process basic statistics on it
+        socket.emit('send_csv', {data: $(this).val()});
+
+        // ****** GOOGLE ANALYTICS EVENT ****** //
+
+        window.dataLayer.push({'event': 'step1-file-uploaded'});
+
+        // After data has been emitted, send the user to the second tab called Step 2: Review Data + Setup Model
+        $('.nav-tabs a[href="#step2"]').tab('show');
+
+        // Then make sure the user is at the top of the page, by scrolling to coordinates (0,0)
+        window.scrollTo(0, 0);
+    }
 
     function parseCSVFile(e) {
 
         // CSV File that is uploaded
         var file = e.target.files[0];
-        //console.log(file)
+        // var file = '/static/sampledata/shampoo_sales.csv';
+        console.log(file)
 
 
         // store results of the parsed csv in csvdata
         var csvdata;
 
         Papa.parse(file, {
-          header: true,
-          dynamicTyping: true,                              // dynamicTyping: If true, numeric and boolean data will be converted to their type instead of remaining strings.
-          complete: function(results) {
-            csvdata = results.data;
-            //console.log(csvdata);
+            header: true,
+            dynamicTyping: true,                              // dynamicTyping: If true, numeric and boolean data will be converted to their type instead of remaining strings.
+            complete: function (results) {
+                csvdata = results.data;
+                //console.log(csvdata);
 
-            // Send the data to a python script app.py to process basic statistics on it
-            socket.emit('send_csv', {data:csvdata});
+                // Send the data to a python script app.py to process basic statistics on it
+                socket.emit('send_csv', {data: csvdata});
 
-            // ****** GOOGLE ANALYTICS EVENT ****** //
+                // ****** GOOGLE ANALYTICS EVENT ****** //
 
-            window.dataLayer.push({'event': 'step1-file-uploaded'});
+                window.dataLayer.push({'event': 'step1-file-uploaded'});
 
-            // After data has been emitted, send the user to the second tab called Step 2: Review Data + Setup Model
-            $('.nav-tabs a[href="#step2"]').tab('show');
+                // After data has been emitted, send the user to the second tab called Step 2: Review Data + Setup Model
+                $('.nav-tabs a[href="#step2"]').tab('show');
 
-            // Then make sure the user is at the top of the page, by scrolling to coordinates (0,0)
-            window.scrollTo(0, 0);
+                // Then make sure the user is at the top of the page, by scrolling to coordinates (0,0)
+                window.scrollTo(0, 0);
 
-          }
+            }
         });
 
 
@@ -64,8 +79,9 @@ $(document).ready(function(){
 
     // On change or upload of a CSV, call the parseCSVFile function
     $("#csv-file").change(parseCSVFile);
-
-
+    $("#use-file0").click(useFile);
+    $("#use-file1").click(useFile);
+    $("#use-file2").click(useFile);
 
 
     // **** DOWNLOAD FORECAST FUNCTION AS A CSV **** //
@@ -87,9 +103,9 @@ $(document).ready(function(){
         result += keys.join(columnDelimiter);
         result += lineDelimiter;
 
-        data.forEach(function(item) {
+        data.forEach(function (item) {
             ctr = 0;
-            keys.forEach(function(key) {
+            keys.forEach(function (key) {
                 if (ctr > 0) result += columnDelimiter;
 
                 result += item[key];
@@ -102,12 +118,9 @@ $(document).ready(function(){
     }
 
 
+    // **** Step 2: Review Data + Setup Model - Responses from Server Side **** //
 
-
-
-     // **** Step 2: Review Data + Setup Model - Responses from Server Side **** //
-
-    socket.on('render_uploaded_csv_data', function(msg) {
+    socket.on('render_uploaded_csv_data', function (msg) {
 
         /*
 
@@ -168,52 +181,50 @@ $(document).ready(function(){
         // Build Pre-Forecast time series chart that allows the user to review the csv data that they uploaded
         var original_chart = document.getElementById("originalChart").getContext('2d');
         var myChart = new Chart(original_chart, {
-        type: 'line',
-        data: {
-            labels: original_dimension,
-            datasets: [{
-                label: 'Actuals',
-                data: original_metric,
-                borderWidth: 1,
-                fill: false,
-                pointRadius: 2,
-                backgroundColor: "rgba(0, 0, 0, 0.5)",
-                borderColor: "rgba(0, 0, 0, 0.0)",
-                borderWidth:1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
+            type: 'line',
+            data: {
+                labels: original_dimension,
+                datasets: [{
+                    label: 'Actuals',
+                    data: original_metric,
+                    fill: false,
+                    pointRadius: 2,
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    borderColor: "rgba(0, 0, 0, 0.0)",
+                    borderWidth: 1
                 }]
             },
-            tooltips: {
-                callbacks: {
-                    label: function(tooltipItem, data) {
-                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
-
-                        if (label) {
-                            label += ': ';
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
                         }
-                        label += Math.round(tooltipItem.yLabel * 100) / 100;
-                        return label;
+                    }]
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += Math.round(tooltipItem.yLabel * 100) / 100;
+                            return label;
+                        }
                     }
                 }
             }
-        }
         });
 
 
         // Next, let's set and render the mean, std, min and max values about the original csv data that the user uploaded.
+        $('#metrics-name').html('Metric Name');
         $('#metrics-mean').html(metric_mean);
         $('#metrics-std').html(metric_std);
         $('#metrics-min').html(metric_min);
         $('#metrics-max').html(metric_max);
-
-
 
 
         // ****** GOOGLE ANALYTICS EVENT ****** //
@@ -225,10 +236,9 @@ $(document).ready(function(){
         // TO DO: On click of the logistic option, unhide the upper and lower bounds or saturation points.
 
 
-
         // ****** On click of the Generate Forecast CTA on Step 2 ***** //
 
-        $('#generate-forecast').click(function() {
+        $('#generate-forecast').click(function () {
 
             /*
 
@@ -254,9 +264,9 @@ $(document).ready(function(){
             // Let's push settings to the selected array
 
             // Determine what is checked and push to selected
-            for (var i=0; i<checkboxes.length; i++) {
-             if (checkboxes[i].checked) {
-                selected.push(checkboxes[i].value);
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    selected.push(checkboxes[i].value);
                 }
             }
 
@@ -270,20 +280,20 @@ $(document).ready(function(){
 
             selected.push('auto');                                               // 'seasonality_mode: not selected yet'
             selected.push('auto');                                               // 'seasonality_prior_scale: not selected yet'
-            selected.push([false,false,false]);                                  // checkbox values for daily, weekly, yearly seasonality
+            selected.push([false, false, false]);                                  // checkbox values for daily, weekly, yearly seasonality
             selected.push('auto');                                               // 'n_changepoints: not selected yet'
             selected.push('auto');                                               // 'changepoints_prior_scale: not selected yet'
 
 
             // Forecast Settings with Original Data and time frequency
-            settings = [selected,msg,freq];
+            settings = [selected, msg, freq];
 
             // Capture time when user clicks generate forecast - to be used when calculating time to render forecast
             generate_forecast_time = Date.now();
 
 
             // Let's Emit all of the forecast settings and orignal data back to the server side
-            socket.emit('forecast_settings', {data:settings});
+            socket.emit('forecast_settings', {data: settings});
 
 
             // ****** GOOGLE ANALYTICS EVENT ****** //
@@ -294,11 +304,11 @@ $(document).ready(function(){
 
             // Send the user to the 3rd tab called Step 3: View Forecast, display loading gif and scroll the window to the top of the page.
             $('.nav-tabs a[href="#step3"]').tab('show');                        // Send user to Step 3: View Forecast Tab
-            $('#loading').css({ display: "block" });                            // Display a loading gif to signify that they model is being built
+            $('#loading').css({display: "block"});                            // Display a loading gif to signify that they model is being built
             window.scrollTo(0, 0);
 
             // Include Message to the User about estimated length of time
-            $('#processing').css({display:"block"});
+            $('#processing').css({display: "block"});
 
             // Clear any data that was set in step 2 - this will get refreshed upon update of step 3.
             original_dataset = '';
@@ -308,17 +318,15 @@ $(document).ready(function(){
 
 
             // Clear the forecast chart if there, so it focuses the user on the loading gif
-            $('#myChart').css({ display: "none" });
+            $('#myChart').css({display: "none"});
 
         }); // End of generate forecast function
     });     // End of render_uploaded_csv_data function
 
 
-
-
     // **** Step 3: View Forecast - Responses from Server Side **** //
 
-    socket.on('render_forecast_chart', function(msg) {
+    socket.on('render_forecast_chart', function (msg) {
 
         /*
 
@@ -344,10 +352,9 @@ $(document).ready(function(){
         */
 
         // First, let's hide the loading gif and then display the chart canvas
-        $('img#loading').css({ display: "none" });
-        $('#myChart').css({ display: "block" });
-        $('#processing').css({display:"none"});
-
+        $('img#loading').css({display: "none"});
+        $('#myChart').css({display: "block"});
+        $('#processing').css({display: "none"});
 
 
         // Store msg.data into a variable called arr
@@ -382,9 +389,6 @@ $(document).ready(function(){
         var difference_mean = forecasted_vals_mean[2] //difference mean
 
 
-
-
-
         // Let's pre-populate the right hand settings with the appropriate data used to build the basic forecast
 
         $('#forecast-length').val(forecast_length);
@@ -413,78 +417,76 @@ $(document).ready(function(){
 
         var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: data_labels,
-            datasets: [{
-                label: 'Forecast',
-                data: forecast,
-                borderWidth: 1,
-                fill: false,
-                pointRadius: 0,
-                backgroundColor: "rgba(54, 162, 235, 0.2)",
-                borderColor:'rgba(54, 162, 235, 1)',
-                borderWidth:1
-            }, {
-                label: 'Actuals',
-                data: original,
-                fill: false,
-                pointRadius: 2,
-                backgroundColor: "rgba(0, 0, 0, 0.5)",
-                borderColor: "rgba(0, 0, 0, 0.0)",
-                borderWidth:1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
+            type: 'line',
+            data: {
+                labels: data_labels,
+                datasets: [{
+                    label: 'Forecast',
+                    data: forecast,
+                    borderWidth: 1,
+                    fill: false,
+                    pointRadius: 0,
+                    backgroundColor: "rgba(54, 162, 235, 0.2)",
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }, {
+                    label: 'Actuals',
+                    data: original,
+                    fill: false,
+                    pointRadius: 2,
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    borderColor: "rgba(0, 0, 0, 0.0)",
+                    borderWidth: 1
                 }]
             },
-            tooltips: {
-                callbacks: {
-                    label: function(tooltipItem, data) {
-                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
-
-                        if (label) {
-                            label += ': ';
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
                         }
-                        label += Math.round(tooltipItem.yLabel * 100) / 100;
-                        return label;
+                    }]
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += Math.round(tooltipItem.yLabel * 100) / 100;
+                            return label;
+                        }
                     }
                 }
             }
-        }
-    });
+        });
 
 
         // Timestamp of forecast render
 
         var forecast_render_time = Date.now();
-        var time_to_render_forecast = ((forecast_render_time - generate_forecast_time)/1000).toFixed(2);
+        var time_to_render_forecast = ((forecast_render_time - generate_forecast_time) / 1000).toFixed(2);
         console.log(time_to_render_forecast);
-
 
 
         // ****** GOOGLE ANALYTICS EVENT ****** //
 
         // Send an event to the data layer indicating that the forecast chart has been successfully rendered on Step 3: View Forecast
-        window.dataLayer.push({'event': 'step3-render-forecast',
-                              'dimension1': time_to_render_forecast
-                              });
+        window.dataLayer.push({
+            'event': 'step3-render-forecast',
+            'dimension1': time_to_render_forecast
+        });
 
 
         // ************ Original Dataset Shape ***************** //
         var original_dataset = arr[6]
 
 
-
-
         // ************ STEP 3: UPDATE CHART CTA CLICK - RIGHT SIDE-NAV BAR ***************** //
 
-        $('#update-chart').click(function() {
+        $('#update-chart').click(function () {
 
             /*
 
@@ -500,10 +502,10 @@ $(document).ready(function(){
             // Declare Updated Variables to be used in forecast settings: u_ stands for "updated" + setting
 
             var u_forecast_length = $('#forecast-length').val();                                // forecast length in time units of days, months, years
-            var u_model_type = $( "#arg-forecast-model option:selected" ).val();                // Model Type: Linear or logistic
+            var u_model_type = $("#arg-forecast-model option:selected").val();                // Model Type: Linear or logistic
             var u_capacity = $('#update-capacity').val();                                       // Upper Limit (used in Logistic model)
             var u_min_saturation = $('#update-min-saturation').val();                           // Lower Limit (used in Logistic model)
-            var u_seasonality_mode = $( "#arg-seasonality-mode option:selected" ).val();        // Seasonality mode: daily, monthly, yearly
+            var u_seasonality_mode = $("#arg-seasonality-mode option:selected").val();        // Seasonality mode: daily, monthly, yearly
             var u_seasonality_prior_scale = $('#seasonality-prior-scale').val();                // Seasonality prior scale
             var u_n_changepoints = $('#n-changepoints').val();                                  // Number of change points
             var changepoints_prior_scale = $('#changepoints-prior-scale').val();                // Change points prior scale
@@ -514,26 +516,25 @@ $(document).ready(function(){
             var u_checkboxes = document.getElementsByName('seasonality_type');
             var selected_seasonality = [];
 
-            for (var i=0; i<u_checkboxes.length; i++) {
-             if (u_checkboxes[i].checked) {
-                selected_seasonality.push(true);
+            for (var i = 0; i < u_checkboxes.length; i++) {
+                if (u_checkboxes[i].checked) {
+                    selected_seasonality.push(true);
+                } else {
+                    selected_seasonality.push(false);
                 }
-             else {
-                selected_seasonality.push(false);
-             }
             }
 
 
             // Build Settings to Update Forecast - to be emitted back to python
-            var original_data = [data_labels,original];
+            var original_data = [data_labels, original];
             var column_headers = arr[4];
-            var forecast_settings_list = [u_model_type,u_forecast_length,u_capacity,u_min_saturation,u_seasonality_mode,u_seasonality_prior_scale,selected_seasonality,u_n_changepoints,changepoints_prior_scale]
-            updated_forecast_settings = [original_data,forecast_settings_list,column_headers,freq,original_dataset];
+            var forecast_settings_list = [u_model_type, u_forecast_length, u_capacity, u_min_saturation, u_seasonality_mode, u_seasonality_prior_scale, selected_seasonality, u_n_changepoints, changepoints_prior_scale]
+            updated_forecast_settings = [original_data, forecast_settings_list, column_headers, freq, original_dataset];
             //console.log(updated_forecast_settings);
 
 
             // Emit updated forecast settings and data back to be processed and fit another Prophet model
-            socket.emit('update_chart_settings', {data:updated_forecast_settings});
+            socket.emit('update_chart_settings', {data: updated_forecast_settings});
 
 
             // ****** GOOGLE ANALYTICS EVENT ****** //
@@ -542,13 +543,12 @@ $(document).ready(function(){
             window.dataLayer.push({'event': 'step3-update-chart-cta'});
 
 
-
             // Hide chart when processing data and display loading gif
 
             myChart.destroy()
-            $('#myChart').css({ display: "none" });
-            $('#loading').css({ display: "block" });
-            $('#processing').css({display:"block"});
+            $('#myChart').css({display: "none"});
+            $('#loading').css({display: "block"});
+            $('#processing').css({display: "block"});
 
 
             // IMPORTANT: Set data_for_csv_export to blank so not to store multiple csvs for download.
@@ -558,7 +558,7 @@ $(document).ready(function(){
         }); // end of update-chart function
 
 
-        $('#reset-button').on('click', function() {
+        $('#reset-button').on('click', function () {
 
 
             /*
@@ -608,7 +608,7 @@ $(document).ready(function(){
 
 
             // Emit original data
-            socket.emit('reset', {data:"reset button clicked"});
+            socket.emit('reset', {data: "reset button clicked"});
 
             // Refresh the webpage
             location.reload(true);
@@ -617,7 +617,7 @@ $(document).ready(function(){
         }); // end of reset-button function
 
 
-        $('#download-forecast-cta').on('click', function() {
+        $('#download-forecast-cta').on('click', function () {
 
             /*
 
@@ -640,59 +640,51 @@ $(document).ready(function(){
             console.log('exporting forecasted data to csv');
 
 
-
             var data, filename, link;
             var csv = convertArrayOfObjectsToCSV({
-                            data: data_for_csv_export
-                            });
+                data: data_for_csv_export
+            });
             if (csv == null)
-            return;
+                return;
 
             // Name of the csv file that is being downloaded
             filename = 'datanarrativeIO_forecast.csv';
 
             var blob = new Blob([csv], {type: "text/csv;charset=utf-8;"});
 
-            if (navigator.msSaveBlob)
-            { // IE 10+
-            navigator.msSaveBlob(blob, filename)
-            }
-            else
-            {
-            var link = document.createElement("a");
-            if (link.download !== undefined) {
+            if (navigator.msSaveBlob) { // IE 10+
+                navigator.msSaveBlob(blob, filename)
+            } else {
+                var link = document.createElement("a");
+                if (link.download !== undefined) {
 
-                // feature detection, Browsers that support HTML5 download attribute
-                var url = URL.createObjectURL(blob);
-                link.setAttribute("href", url);
-                link.setAttribute("download", filename);
-                link.style = "visibility:hidden";
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
+                    // feature detection, Browsers that support HTML5 download attribute
+                    var url = URL.createObjectURL(blob);
+                    link.setAttribute("href", url);
+                    link.setAttribute("download", filename);
+                    link.style = "visibility:hidden";
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
             }
 
 
-             // ****** GOOGLE ANALYTICS EVENT ****** //
+            // ****** GOOGLE ANALYTICS EVENT ****** //
 
             // send an event to the data layer signifying that the Export Forecast CSV button has been clicked.
             window.dataLayer.push({'event': 'step3-download-forecast-data-cta'});
 
 
-
-
         }); // end of the download-forecast-cta function
-
 
 
     });     // end of the render_forecast_chart
 
 
-
     // ******** THE CODE BELOW IS PLACEHOLDER CODE FOR MODEL VALIDATION AND WILL BE UPDATED IN A FUTURE RELEASE ******** //
 
-    $('#reload-button').on('click', function() {
+    $('#reload-button').on('click', function () {
 
         // Refresh the app
         location.reload(true);
@@ -702,7 +694,7 @@ $(document).ready(function(){
 
     // Display updates to user when the data is processing
 
-    socket.on('processing', function(msg) {
+    socket.on('processing', function (msg) {
 
         // Update UI with steps processed on step 3: View Forecast
         console.log('model has been fit')
@@ -710,25 +702,20 @@ $(document).ready(function(){
     });
 
 
-    socket.on('error', function(msg) {
+    socket.on('error', function (msg) {
 
         // Store msg.data into a variable called arr
         var error_data = msg.data;
 
 
-
-
-
         // Update UI with error notice
-        $('#user-messaging').css({display:"block"});
+        $('#user-messaging').css({display: "block"});
         $('#error-message').html('<b>Error: </b> Whoops! You may want to check the following rows in your csv for null values: <br/>' + 'Row #: ' + error_data)
 
     });
 
 
-
-
-    socket.on('model_validation', function(msg) {
+    socket.on('model_validation', function (msg) {
 
         var mape_data = msg.data;
         console.log(mape_data);
@@ -737,15 +724,14 @@ $(document).ready(function(){
 
     });
 
-    $(function() {
-        $('#summary-stats').change(function(){
+    $(function () {
+        $('#summary-stats').change(function () {
             $('.helpful-stats').hide();
             $('#' + $(this).val()).show();
         });
     });
 
     // var past_period = $("#forecast-length").val();
-
 
 
 });         // end of document ready function

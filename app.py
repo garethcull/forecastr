@@ -53,7 +53,9 @@ def connected(message):
 
 @socketio.on('forecast_settings')
 def forecast_settings(message):
-    # Initial forecast settings - the first time the user sends forecast settings through the app - will use this value in forecastr method
+    # Initial forecast settings
+    # - the first time the user sends forecast settings through the app
+    # - will use this value in forecastr method
     build_settings = 'initial'
 
     # store message['data'] into a df called data
@@ -169,11 +171,17 @@ def reset(message):
 def main(message):
     # Store message['data'] in data
     data = message['data']
+    print(data)
 
     # Convert data to a pandas DataFrame
-    data = pd.DataFrame(data)
+    if str(data).endswith('csv'):
+        # /static/sampledata/shampoo_sales.csv
+        # need remove the head '/'
+        data = pd.read_csv(str(data)[1:])
+    else:
+        data = pd.DataFrame(data)
 
-    # print(data)
+    print(data.head())
 
     # Let's do some preprocessing on this data to determine which column is the dimension vs. metric.
     column_headers = preprocessing(data)
@@ -199,4 +207,4 @@ def main(message):
 
 
 if __name__ == '__main__':
-    socketio.run(app, log_output=True, debug=True)
+    socketio.run(app, log_output=True, debug=True, use_reloader=True)

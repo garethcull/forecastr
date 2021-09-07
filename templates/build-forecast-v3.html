@@ -49,6 +49,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
             integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
             crossorigin="anonymous"></script>
+    {#    <script src="https://cdn.bootcdn.net/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>#}
     <script type="text/javascript" src="{{ url_for('static', filename='js/papaparse.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/forecastr_v4.js') }}"></script>
@@ -61,10 +62,10 @@
 <body>
 
 <!-- Google Tag Manager (noscript) -->
-<noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PP5GR6W"
-            height="0" width="0" style="display:none;visibility:hidden"></iframe>
-</noscript>
+{#<noscript>#}
+{#    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PP5GR6W"#}
+{#            height="0" width="0" style="display:none;visibility:hidden"></iframe>#}
+{#</noscript>#}
 <!-- End Google Tag Manager (noscript) -->
 
 <div class='container'>
@@ -139,19 +140,37 @@
 
                         <table class='table'>
                             <thead>
-                            <th></th>
+                            <th>Upload</th>
+                            <th>Download</th>
                             <th>Dataset</th>
                             <th>Series Type</th>
                             </thead>
 
                             <tr>
-                                <td><a href="{{ url_for('static', filename='sampledata/shampoo_sales.csv') }}"><img
-                                        class='download-csv-icon'
-                                        src="{{ url_for('static', filename='img/download_arrow.png') }}"/></a></td>
+                                <td>
+                                    <button id="use-file0"
+                                            value="{{ url_for('static', filename='sampledata/shampoo_sales.csv') }}">
+                                        <img class='download-csv-icon'
+                                             src="{{ url_for('static', filename='img/step1_upload_csv.png') }}"/>
+                                    </button>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('static', filename='sampledata/shampoo_sales.csv') }}">
+                                        <img class='download-csv-icon'
+                                             src="{{ url_for('static', filename='img/download_arrow.png') }}"/>
+                                    </a>
+                                </td>
                                 <td>Shampoos Sales</td>
                                 <td>Monthly</td>
                             </tr>
                             <tr>
+                                <td>
+                                    <button id="use-file1"
+                                            value="{{ url_for('static', filename='sampledata/mean_temps.csv') }}">
+                                        <img class='download-csv-icon'
+                                             src="{{ url_for('static', filename='img/step1_upload_csv.png') }}"/>
+                                    </button>
+                                </td>
                                 <td><a href="{{ url_for('static', filename='sampledata/mean_temps.csv') }}"><img
                                         class='download-csv-icon'
                                         src="{{ url_for('static', filename='img/download_arrow.png') }}"/></a></td>
@@ -159,6 +178,13 @@
                                 <td>Daily</td>
                             </tr>
                             <tr>
+                                <td>
+                                    <button id="use-file2"
+                                            value="{{ url_for('static', filename='sampledata/example_wp_log_peyton_manning_v2.csv') }}">
+                                        <img class='download-csv-icon'
+                                             src="{{ url_for('static', filename='img/step1_upload_csv.png') }}"/>
+                                    </button>
+                                </td>
                                 <td>
                                     <a href="{{ url_for('static', filename='sampledata/example_wp_log_peyton_manning_v2.csv') }}"><img
                                             class='download-csv-icon'
@@ -205,14 +231,25 @@
                             <h5>SUMMARY STATISTICS ABOUT YOUR DATA</h5><br/>
 
                             <ol class='helpful-stats'>
-                                <li class='helpful-title mean'>Mean<br><span id='metrics-mean'
-                                                                             class='summary-data'>--</span></li>
-                                <li class='helpful-title std'>Std<br><span id='metrics-std'
-                                                                           class='summary-data'>--</span></li>
-                                <li class='helpful-title min'>Min<br><span id='metrics-min'
-                                                                           class='summary-data'>--</span></li>
-                                <li class='helpful-title max'>Max<br><span id='metrics-max'
-                                                                           class='summary-data'>--</span></li>
+                                <li class='helpful-title name'>Name<br>
+                                    <span class="summary-data" id="'metrics-name">Y</span>
+                                </li>
+                                <li class='helpful-title mean'>Mean<br>
+                                    <span id='metrics-mean'
+                                          class='summary-data'>--</span>
+                                </li>
+                                <li class='helpful-title std'>Std<br>
+                                    <span id='metrics-std'
+                                          class='summary-data'>--</span>
+                                </li>
+                                <li class='helpful-title min'>Min<br>
+                                    <span id='metrics-min'
+                                          class='summary-data'>--</span>
+                                </li>
+                                <li class='helpful-title max'>Max<br>
+                                    <span id='metrics-max'
+                                          class='summary-data'>--</span>
+                                </li>
                             </ol>
 
                         </div>
@@ -226,14 +263,14 @@
                         <div id='forecast-out'>
                             <h5 class='sub-header'><b>Forecast Length</b></h5>
                             <p>How many <span id='timeframe'>days</span> do you want to forecast out?</p>
-                            <input id="days-to-forecast" type="number"><br><br>
+                            <input id="days-to-forecast" type="number" value="14"><br><br>
                         </div>
 
                         <div id='forecast-model-type'>
 
                             <h5 class='sub-header'>Forecast Model</h5>
                             <p>What type of forecasting model would you like to use?</p>
-                            <input class='option' type="radio" name="selection" value="linear"> Linear<br>
+                            <input class='option' type="radio" name="selection" value="linear" checked> Linear<br>
                             <input class='option' type="radio" name="selection" value="logistic"> Logistic<br><br>
 
 
@@ -245,6 +282,8 @@
 
                         </div>
 
+                        <button id="tuning-params">TUNING PARAMS</button>
+                        <br><br>
                         <button id="generate-forecast">GENERATE FORECAST</button>
 
                     </div>
@@ -277,7 +316,7 @@
                             <h5>PREVIOUS VS. FUTURE FORECAST STATISTICS</h5><br/>
                             <select class="form-control arguments" id="summary-stats">
                                 <option value="" selected disabled>COMPARISON METRIC</option>
-                                <option value="sum" active>Sum</option>
+                                <option value="sum" selected>Sum</option>
                                 <option value="average">Average</option>
                             </select>
 
@@ -344,6 +383,26 @@
                             <li class='arguments'>
                                 <span class='argument-name'>LOWER LIMIT TO FORECAST</span><br>
                                 <input class='num-field' id="update-min-saturation" type="number">
+                            </li>
+
+                        </div>
+
+                        <div class='filter-groups' id='param-filters'>
+
+                            <li class='param-header'>PARAM (?)</li>
+                            <li class='arguments'>
+                                <span class='argument-name'>CHANGEPOINT PRIOR SCALE:</span><br>
+                                <input class='num-field' id="changepoint_prior_scale" type="number" value="0.05">
+                            </li>
+
+                            <li class='arguments'>
+                                <span class='argument-name'>SEASONALITY PRIOR SCALE:</span><br>
+                                <input class='num-field' id="seasonality_prior_scale" type="number" value="10.0">
+                            </li>
+
+                            <li class='arguments'>
+                                <span class='argument-name'>N CHANGEPOINTS:</span><br>
+                                <input class='num-field' id="n_changepoints" type="number" value="25">
                             </li>
 
                         </div>

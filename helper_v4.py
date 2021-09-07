@@ -104,10 +104,10 @@ def forecastr(data, forecast_settings, column_headers, freq_val, build_settings)
     prophet_arg_vals = {}
 
     for key, value in model_arg_vals.items():
-        if (value == "") or (value == False) or (value == 0) or (value == 'auto'):
-            print('skipping this key value pair')
-        else:
+        if value != "" and value != False and value != 0 and value != 'auto':
             prophet_arg_vals[key] = value
+        else:
+            print('skipping this key value pair')
 
     ##### TIME TO INSTANTIATE, FIT AND PREDICT WITH FACEBOOK PROPHET ######
 
@@ -422,11 +422,11 @@ def determine_timeframe(data, time_unit):
         time = 'days'
         freq = 'D'
         desc = 'daily'
-    elif time_delta >= 7 and time_delta <= 27:
+    elif 7 <= time_delta <= 27:
         time = 'weeks'
         freq = 'W'
         desc = 'weekly'
-    elif time_delta >= 28 and time_delta <= 31:
+    elif 28 <= time_delta <= 31:
         time = 'months'
         freq = 'M'
         desc = 'monthly'
