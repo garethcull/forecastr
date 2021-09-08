@@ -46,6 +46,8 @@
     <link href="{{ url_for('static', filename='styles/app.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
+    {#    <script src="https://cdn.plot.ly/plotly-2.4.2.min.js"></script>#}
+    <script src="{{ url_for('static', filename='js/plotly-2.4.2.min.js') }}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
             integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
             crossorigin="anonymous"></script>
@@ -53,8 +55,8 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/papaparse.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/forecastr_v4.js') }}"></script>
-    <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+    {#    <script type="text/javascript"#}
+    {#            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>#}
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
@@ -100,7 +102,6 @@
             <div class="tab-content">
 
                 <div id="step1" class="tab-pane fade in active">
-
                     <div class='main-content'>
 
                         <h3 class='step-title'>STEP 1: UPLOAD A CSV</h3><br/>
@@ -227,7 +228,8 @@
                         <h5 id='original-data-chart-title' class='sub-header'>INSERT TITLE</h5>
                         <div id='build-basic-forecast'>
 
-                            <canvas id="originalChart"></canvas>
+                            <div id="originalChart"></div>
+                            {#                            <canvas id="originalChart"></canvas>#}
                             <h5>SUMMARY STATISTICS ABOUT YOUR DATA</h5><br/>
 
                             <ol class='helpful-stats'>
@@ -263,7 +265,7 @@
                         <div id='forecast-out'>
                             <h5 class='sub-header'><b>Forecast Length</b></h5>
                             <p>How many <span id='timeframe'>days</span> do you want to forecast out?</p>
-                            <input id="days-to-forecast" type="number" value="14"><br><br>
+                            <input id="days-to-forecast" type="number" value="60"><br><br>
                         </div>
 
                         <div id='forecast-model-type'>
@@ -309,7 +311,8 @@
                                 Your forecast is being built. Larger datasets may experience wait times of up to 1
                                 minute in the Alpha Version of this site.
                             </p>
-                            <canvas id="myChart"></canvas>
+                            {#                            <canvas id="myChart"></canvas>#}
+                            <div id="myChart"></div>
 
                             <!-- Previous vs Future Dropdown Stats -->
 
@@ -342,11 +345,13 @@
                                         id='metrics-actualssum_mean' class='summary-data'>--</span></li>
                                 <li class='helpful-title sum'>Next Forecasted <span
                                         id="forecast-length-comp-avg-percent"></span> <span
-                                        id="timeframe-comp-avg-percent"></span><br><span id='metrics-forecastsum_mean'
-                                                                                         class='summary-data'>--</span>
+                                        id="timeframe-comp-avg-percent"></span><br><span
+                                        id='metrics-forecastsum_mean'
+                                        class='summary-data'>--</span>
                                 </li>
-                                <li class='helpful-title difference'>Forecast vs. Past <br><span id='metrics-diff_mean'
-                                                                                                 class='summary-data'>--</span>
+                                <li class='helpful-title difference'>Forecast vs. Past <br><span
+                                        id='metrics-diff_mean'
+                                        class='summary-data'>--</span>
                                 </li>
                             </ol>
                         </div>
@@ -387,26 +392,6 @@
 
                         </div>
 
-                        <div class='filter-groups' id='param-filters'>
-
-                            <li class='param-header'>PARAM (?)</li>
-                            <li class='arguments'>
-                                <span class='argument-name'>CHANGEPOINT PRIOR SCALE:</span><br>
-                                <input class='num-field' id="changepoint_prior_scale" type="number" value="0.05">
-                            </li>
-
-                            <li class='arguments'>
-                                <span class='argument-name'>SEASONALITY PRIOR SCALE:</span><br>
-                                <input class='num-field' id="seasonality_prior_scale" type="number" value="10.0">
-                            </li>
-
-                            <li class='arguments'>
-                                <span class='argument-name'>N CHANGEPOINTS:</span><br>
-                                <input class='num-field' id="n_changepoints" type="number" value="25">
-                            </li>
-
-                        </div>
-
                         <div class='filter-groups' id='seasonality-filters'>
 
                             <li class='param-header'>SEASONALITY (?)</li>
@@ -420,13 +405,15 @@
                             <li class='arguments seasonality-check-options'>
                                 <span class='argument-name'>SEASONALITY TYPE:</span><br>
                                 <input type="checkbox" name="seasonality_type" value="daily_seasonality"> DAILY<br>
-                                <input type="checkbox" name="seasonality_type" value="weekly_seasonality"> WEEKLY<br>
-                                <input type="checkbox" name="seasonality_type" value="yearly_seasonality"> YEARLY<br>
+                                <input type="checkbox" name="seasonality_type" value="weekly_seasonality">
+                                WEEKLY<br>
+                                <input type="checkbox" name="seasonality_type" value="yearly_seasonality">
+                                YEARLY<br>
 
                             </li>
                             <li class='arguments'>
                                 <span class='argument-name'>SEASONALITY PRIOR SCALE</span><br>
-                                <input class='num-field' id="seasonality-prior-scale" type="number">
+                                <input class='num-field' id="seasonality-prior-scale" type="number" value="10.0">
                             </li>
                         </div>
 
@@ -435,11 +422,11 @@
                             <li class='param-header'>CHANGEPOINTS (?)</li>
                             <li class='arguments'>
                                 <span class='argument-name'># OF CHANGEPOINTS</span><br>
-                                <input class='num-field' id="n-changepoints" type="number">
+                                <input class='num-field' id="n-changepoints" type="number" value="25" min="0" step="1">
                             </li>
                             <li class='arguments'>
                                 <span class='argument-name'>CHANGEPOINT PRIOR SCALE</span><br>
-                                <input class='num-field' id="changepoints-prior-scale" type="number">
+                                <input class='num-field' id="changepoints-prior-scale" type="number" value="0.05">
                             </li>
 
                         </div>

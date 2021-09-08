@@ -1,5 +1,4 @@
 # Import Modules
-
 import logging
 
 import pandas as pd
@@ -60,19 +59,29 @@ def forecast_settings(message):
 
     # store message['data'] into a df called data
     data = message['data']
+    print(data)
 
     # Keep Original Data in Exisiting Structure
-    original_dataset = data[1]['data'][1]['data']
+    # data[0] is settings
+    forecast_settings = data[0]
+
+    # data[1] is message send by main
+    # [column_headers, message, timeframe, summary_stats, original_data]
+    original_dataset = data[1]['data'][4]
 
     # print("******************** ORIGINAL DATASET *****************************")
     # print(original_dataset)
     # print("******************** ORIGINAL DATASET *****************************")
 
     # Extract info from forecast_settings message
-    time_series_data = pd.DataFrame(data[1]['data'][1]['data'])
-    forecast_settings = data[0]
-    freq = data[2]
     column_headers = data[1]['data'][0]
+    print(original_dataset)
+    print(column_headers)
+    time_series_data = pd.DataFrame(
+        data={column_headers[0]: original_dataset[0],
+              column_headers[1]: original_dataset[1]}
+    )
+    freq = data[2]
 
     # Format the date and metric unit
     time_unit = column_headers[0]
@@ -84,19 +93,12 @@ def forecast_settings(message):
     y = time_series_data[metric].tolist()
 
     # Use Facebook Prophet through forecastr method
-    forecast = forecastr(time_series_data, forecast_settings, column_headers, freq, build_settings)
-
-    # Need to convert forecast back into a list / array for y, y_hat and date so it can be properly graphed with chartjs
-    y_hat = forecast[0]
-    dates = forecast[1]
-    model = forecast[2]
-    csv_export = forecast[3]
-    forecasted_vals = forecast[4]
-    forecasted_vals_mean = forecast[5]
+    y_hat, dates, model, csv_export, forecasted_vals, forecasted_vals_mean, yhat_lower, yhat_upper = forecastr(
+        time_series_data, forecast_settings, column_headers, freq, build_settings)
 
     # Send data back to the client
     data_back_to_client = [dates, y_hat, y, forecast_settings, column_headers, freq, original_dataset, csv_export,
-                           forecasted_vals, forecasted_vals_mean]
+                           forecasted_vals, forecasted_vals_mean, yhat_lower, yhat_upper]
     # print(data_back_to_client)
 
     emit('render_forecast_chart', {'data': data_back_to_client})
@@ -115,17 +117,20 @@ def update_chart(message):
     data = message['data']
 
     ### Setup variables for use in the forecastr method
+    forecast_settings = data[1]
+    column_headers = data[2]
+    freq = data[3]
+    # original_dataset
     time_series_data = data[4]
     original_dataset = time_series_data
-    time_series_data = pd.DataFrame(time_series_data)
+    time_series_data = pd.DataFrame(data={
+        column_headers[0]: time_series_data[0],
+        column_headers[1]: time_series_data[1],
+    })
 
     # print("********* TIME SERIES DF ****************")
     # print(time_series_data.head())
     # print("********* TIME SERIES DF ****************")
-
-    forecast_settings = data[1]
-    column_headers = data[2]
-    freq = data[3]
 
     # Dimension and Metric
     time_unit = column_headers[0]
@@ -140,19 +145,12 @@ def update_chart(message):
     y = time_series_data[metric].tolist()
 
     # Use Facebook Prophet through forecastr method
-    forecast = forecastr(time_series_data, forecast_settings, column_headers, freq, build_settings)
-
-    # Need to convert forecast back into a list / array for y, y_hat and date so it can be properly graphed with chartjs
-    y_hat = forecast[0]
-    dates = forecast[1]
-    model = forecast[2]
-    csv_export = forecast[3]
-    forecasted_vals = forecast[4]
-    forecasted_vals_mean = forecast[5]
+    y_hat, dates, model, csv_export, forecasted_vals, forecasted_vals_mean, yhat_lower, yhat_upper = forecastr(
+        time_series_data, forecast_settings, column_headers, freq, build_settings)
 
     # Send data back to the client - took out original dataset
     data_back_to_client = [dates, y_hat, y, forecast_settings, column_headers, freq, original_dataset, csv_export,
-                           forecasted_vals, forecasted_vals_mean]
+                           forecasted_vals, forecasted_vals_mean, yhat_lower, yhat_upper]
     emit('render_forecast_chart', {'data': data_back_to_client})
 
     # Validate Model
@@ -177,28 +175,28 @@ def main(message):
     if str(data).endswith('csv'):
         # /static/sampledata/shampoo_sales.csv
         # need remove the head '/'
-        data = pd.read_csv(str(data)[1:])
+        df = pd.read_csv(str(data)[1:])
     else:
-        data = pd.DataFrame(data)
+        df = pd.DataFrame(data)
 
-    print(data.head())
+    print(df.head())
 
     # Let's do some preprocessing on this data to determine which column is the dimension vs. metric.
-    column_headers = preprocessing(data)
+    column_headers = preprocessing(df)
 
     # Set the time unit and metrc unit names
     time_unit = column_headers[0]
     metric_unit = column_headers[1]
 
     # Determine whether the timeframe is daily, weekly, monthly, or yearly
-    timeframe = determine_timeframe(data, time_unit)
+    timeframe = determine_timeframe(df, time_unit)
 
     # Get summary statistics about original dataset
-    summary_stats = get_summary_stats(data, column_headers)
+    summary_stats = get_summary_stats(df, column_headers)
 
     # Send original data to a list
-    dimension = data[time_unit].tolist()
-    metric = data[metric_unit].tolist()
+    dimension = df[time_unit].tolist()
+    metric = df[metric_unit].tolist()
 
     original_data = [dimension, metric]
 

@@ -179,45 +179,63 @@ $(document).ready(function () {
 
 
         // Build Pre-Forecast time series chart that allows the user to review the csv data that they uploaded
-        var original_chart = document.getElementById("originalChart").getContext('2d');
-        var myChart = new Chart(original_chart, {
-            type: 'line',
-            data: {
-                labels: original_dimension,
-                datasets: [{
-                    label: 'Actuals',
-                    data: original_metric,
-                    fill: false,
-                    pointRadius: 2,
-                    backgroundColor: "rgba(0, 0, 0, 0.5)",
-                    borderColor: "rgba(0, 0, 0, 0.0)",
-                    borderWidth: 1
-                }]
+        // var original_chart = document.getElementById("originalChart").getContext('2d');
+        var original_chart = document.getElementById('originalChart');
+        // var myChart = new Chart(original_chart, {
+        //     type: 'line',
+        //     data: {
+        //         labels: original_dimension,
+        //         datasets: [{
+        //             label: 'Actual',
+        //             data: original_metric,
+        //             fill: false,
+        //             pointRadius: 2,
+        //             backgroundColor: "rgba(0, 0, 0, 0.5)",
+        //             borderColor: "rgba(0, 0, 0, 0.0)",
+        //             borderWidth: 1
+        //         }]
+        //     },
+        //     options: {
+        //         scales: {
+        //             yAxes: [{
+        //                 ticks: {
+        //                     beginAtZero: true
+        //                 }
+        //             }]
+        //         },
+        //         tooltips: {
+        //             callbacks: {
+        //                 label: function (tooltipItem, data) {
+        //                     var label = data.datasets[tooltipItem.datasetIndex].label || '';
+        //
+        //                     if (label) {
+        //                         label += ': ';
+        //                     }
+        //                     label += Math.round(tooltipItem.yLabel * 100) / 100;
+        //                     return label;
+        //                 }
+        //             }
+        //         }
+        //     }
+        // });
+        var data = [{
+            x: original_dimension,
+            y: original_metric,
+            type: 'scatter'
+        }];
+        var layout = {
+            title: titleOfChart,
+            xaxis: {
+                title: 'Date',
+                showgrid: false,
+                zeroline: false
             },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                },
-                tooltips: {
-                    callbacks: {
-                        label: function (tooltipItem, data) {
-                            var label = data.datasets[tooltipItem.datasetIndex].label || '';
-
-                            if (label) {
-                                label += ': ';
-                            }
-                            label += Math.round(tooltipItem.yLabel * 100) / 100;
-                            return label;
-                        }
-                    }
-                }
+            yaxis: {
+                title: 'Actual',
+                showLine: false
             }
-        });
-
+        };
+        var myChart = Plotly.newPlot(original_chart, data, layout);
 
         // Next, let's set and render the mean, std, min and max values about the original csv data that the user uploaded.
         $('#metrics-name').html('Metric Name');
@@ -347,6 +365,8 @@ $(document).ready(function () {
         arr[5]: Frequency used in Model: eg. "M", "D", "Y"
         arr[6]: Original Dataset Shape: [{Month: "2012-01-01", Sales of shampoo over a three year period: 266},...]
         arr[7]: Forecast Data for CSV Export: dimension,y, y_hat, y_upper_bounds, y_lower_bounds
+        arr[10]: yhat_lower
+        arr[11]: yhat_upper
 
 
         */
@@ -366,6 +386,8 @@ $(document).ready(function () {
         data_labels = arr[0];                       // date
         forecast = arr[1];                          // y_hat
         original = arr[2];                          // y
+        yhat_lower = arr[10];
+        yhat_upper = arr[11];
         var data_for_csv_export = arr[7];           // csv data for export button click.
         forecast_settings = arr[3]                  // forecast settings
         var model_type = forecast_settings[0]       // model type: linear or logistic
@@ -373,7 +395,6 @@ $(document).ready(function () {
         var capacity = forecast_settings[2]         // Upper Limit (used with logistic model)
         var min_saturation = forecast_settings[3]   // Lower Limit (used with logistic model)
 
-        // We'll
 
         var forecasted_vals = arr[8]
         var forecasted_vals_mean = arr[9]
@@ -414,55 +435,102 @@ $(document).ready(function () {
 
 
         // Now let's render the forecast
-
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: data_labels,
-                datasets: [{
-                    label: 'Forecast',
-                    data: forecast,
-                    borderWidth: 1,
-                    fill: false,
-                    pointRadius: 0,
-                    backgroundColor: "rgba(54, 162, 235, 0.2)",
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }, {
-                    label: 'Actuals',
-                    data: original,
-                    fill: false,
-                    pointRadius: 2,
-                    backgroundColor: "rgba(0, 0, 0, 0.5)",
-                    borderColor: "rgba(0, 0, 0, 0.0)",
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+        var error_color = 'rgba(0, 114, 178, 0.2)';
+        var ctx = document.getElementById('myChart');
+        var selectorOptions = {
+            buttons: [
+                {
+                    count: 7,
+                    label: '1w',
+                    step: 'day',
+                    stepmode: 'backward'
                 },
-                tooltips: {
-                    callbacks: {
-                        label: function (tooltipItem, data) {
-                            var label = data.datasets[tooltipItem.datasetIndex].label || '';
-
-                            if (label) {
-                                label += ': ';
-                            }
-                            label += Math.round(tooltipItem.yLabel * 100) / 100;
-                            return label;
-                        }
-                    }
+                {
+                    step: 'month',
+                    stepmode: 'backward',
+                    count: 1,
+                    label: '1m'
+                },
+                {
+                    step: 'month',
+                    stepmode: 'backward',
+                    count: 6,
+                    label: '6m'
+                },
+                {
+                    step: 'year',
+                    stepmode: 'backward',
+                    count: 1,
+                    label: '1y'
+                }, {
+                    step: 'all',
                 }
+            ]
+        }
+        var data = [
+            // actual data
+            {
+                name: 'Actual',
+                x: data_labels,
+                y: original,
+                mode: 'markers',
+                marker: {
+                    color: 'black',
+                    size: 4
+                }
+            },
+            // forecast data
+            {
+                name: 'Predicted',
+                x: data_labels,
+                y: forecast,
+                type: 'scatter',
+                mode: 'lines',
+                fillcolr: error_color,
+                fill: 'tonexty',
+                line: {
+                    color: '#0072B2',
+                    width: 2
+                }
+            },
+            // yhat_lower
+            {
+                x: data_labels,
+                y: yhat_lower,
+                mode: 'lines',
+                line: {
+                    width: 0
+                },
+                hoverinfo: 'skip'
+            },
+            // yhat_upper
+            {
+                x: data_labels,
+                y: yhat_upper,
+                mode: 'lines',
+                line: {
+                    width: 0
+                },
+                hoverinfo: 'skip',
+                fillcolor: error_color,
+                fill: 'tonexty'
             }
-        });
-
+        ];
+        var layout = {
+            showlegend: false,
+            title: 'Forecast',
+            xaxis: {
+                title: 'Date',
+                showgrid: false,
+                zeroline: false,
+                rangeselector: selectorOptions,
+                rangeslider: {visible: true}
+            },
+            yaxis: {
+                title: 'Forecast',
+            }
+        };
+        var myChart = Plotly.newPlot(ctx, data, layout);
 
         // Timestamp of forecast render
 
@@ -545,7 +613,7 @@ $(document).ready(function () {
 
             // Hide chart when processing data and display loading gif
 
-            myChart.destroy()
+            // myChart.destroy()
             $('#myChart').css({display: "none"});
             $('#loading').css({display: "block"});
             $('#processing').css({display: "block"});
@@ -571,7 +639,7 @@ $(document).ready(function () {
 
 
             // Delete Forecast Chart
-            myChart.destroy();
+            // myChart.destroy();
 
 
             // Send user back to Step 1
