@@ -61,7 +61,6 @@
                 <nav>
                     <ul class="nav-bar">
                         <li><a class='nav-link aboutapp' href="/">about app</a></li>
-                        <li><a class='nav-link feedback-link' href="https://goo.gl/forms/9Dx5dAMzCtF2yXAy2">feedback</a></li>
                         <li><a class='nav-link partner-with-me' href="https://www.linkedin.com/in/garethcull/">NEED AN ANALYTICS PARTNER?</a></li>
                     </ul>
                 </nav>
@@ -126,6 +125,11 @@
                                     <th>Series Type</th>
                                 </thead>
 
+                                    <tr>
+                                        <td><a href="{{url_for('static', filename='sampledata/annual-sheep-population.csv')}}"><img class='download-csv-icon' src="{{url_for('static', filename='img/download_arrow.png')}}"/></a></td>
+                                        <td>Annual Sheep Population</td>
+                                        <td>Yearly</td>
+                                    </tr>
                                     <tr>
                                         <td><a href="{{url_for('static', filename='sampledata/shampoo_sales.csv')}}"><img class='download-csv-icon' src="{{url_for('static', filename='img/download_arrow.png')}}"/></a></td>
                                         <td>Shampoos Sales</td>
@@ -205,7 +209,7 @@
                                 <input class='option' type="radio" name="selection" value="logistic"> Logistic<br><br>
 
 
-                                <p id="logistic-option-text">By selecting a logistic forecast, you are required to set upper and lower saturation points.<a href="#">What's this?</a></p>
+                                <p id="logistic-option-text">By selecting a logistic forecast, you are required to set upper and lower saturation points.<a href="https://facebook.github.io/prophet/docs/saturating_forecasts.html">What's this?</a></p>
 
                                 Upper: <input id="upper-limit" type="number"><br>
                                 Lower: <input id="lower-limit" type="number"><br><br>
@@ -272,7 +276,7 @@
 
                             <div class='filter-groups' id='growth-filters'>
 
-                                <li class='param-header'>GROWTH (?)</li>
+                                <li class='param-header'>GROWTH <a href="https://facebook.github.io/prophet/docs/additional_topics.html#flat-trend-and-custom-trends">(?)</a></li>
                                 <li class='arguments'>
                                     <span class='argument-name'>FORECAST LENGTH:</span><br>
                                     <input class='num-field' id="forecast-length" type="number">
@@ -297,7 +301,7 @@
 
                             <div class='filter-groups' id='seasonality-filters'>
 
-                                <li class='param-header'>SEASONALITY (?)</li>
+                                <li class='param-header'>SEASONALITY <a href="https://facebook.github.io/prophet/docs/seasonality,_holiday_effects,_and_regressors.html#specifying-custom-seasonalities">(?)</a></li>
                                 <li class='arguments'>
                                     <select class='dd-menu' id='arg-seasonality-mode'>
                                       <option value="" selected disabled>SEASONALITY MODE</option>
@@ -320,7 +324,7 @@
 
                             <div class='filter-groups' id='changepoint-filters'>
 
-                                <li class='param-header'>CHANGEPOINTS (?)</li>
+                                <li class='param-header'>CHANGEPOINTS <a href="https://facebook.github.io/prophet/docs/trend_changepoints.html#adjusting-trend-flexibility">(?)</a></li>
                                 <li class='arguments'>
                                     <span class='argument-name'># OF CHANGEPOINTS</span><br>
                                     <input class='num-field' id="n-changepoints" type="number">
