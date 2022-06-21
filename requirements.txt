@@ -4,7 +4,7 @@ Flask==1.0.2
 Flask-SocketIO==3.0.2
 fbprophet==0.3.post2
 gunicorn==19.9.0
-numpy==1.15.4
+numpy==1.22.0
 pandas==0.23.0
 python-dateutil==2.7.5
 python-engineio==2.3.2
